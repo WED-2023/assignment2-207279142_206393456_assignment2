@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Trouble X</title>
+<html>
+  <head>
+    <title>Bubble Trouble X Game</title>
     <style>
-        canvas {
-          background: gold;
-          display: block;
-          margin: 0 auto;
-        }
-      </style>
-</head>
-<body>
+      canvas {
+        background: url("Images/Background.WEBP") no-repeat center center;
+        background-size: cover;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
     <canvas id="gameCanvas" width="500" height="600"></canvas>
-    <script src="BubbleTroubleX.js"></script>
-
-</body>
+    <audio id="fireSound" src="Audios/shut.mp3"></audio>
+    <audio id="hitSound" src="Audios/pop.mp3"></audio>
+    <script src="JS/BubbleTroubleX.js"></script>
+  </body>
 </html>

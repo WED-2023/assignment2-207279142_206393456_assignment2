@@ -1,19 +1,96 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <title>Bubble Trouble X Game</title>
-    <style>
-      canvas {
-        background: url("Images/Background.WEBP") no-repeat center center;
-        background-size: cover;
-        margin: 0 auto;
-      }
-    </style>
+    <meta charset="UTF-8"> <!-- Character set for the document -->
+    <meta name="viewport" content="width=1366, initial-scale=1.0"> <!-- Responsive design for mobile devices  ?? -->
+    <title>Bubble Invaders</title>
+    <link rel="stylesheet" href="css/main.css">
   </head>
+
   <body>
-    <canvas id="gameCanvas" width="500" height="600"></canvas>
-    <audio id="fireSound" src="Audios/shut.mp3"></audio>
-    <audio id="hitSound" src="Audios/pop.mp3"></audio>
-    <script src="JS/BubbleTroubleX.js"></script>
+
+    <header>
+      <h1>Bubble Invaders</h1> 
+    </header>
+
+    <nav>
+      <button data-screen="welcome">Home</button>
+      <button data-screen="register">Register</button>
+      <button data-screen="login">Login</button>
+      <button data-screen="game">Go to Game</button>
+      <button id="aboutBtn">About</button>
+    </nav>
+
+
+
+    <main>
+      <!-- Welcome Screen -->
+      <div id="welcome" class="screen active">
+        <div class="welcome-menu">
+          <h1 class="game-title">Bubble Invaders</h1>
+      
+          <div class="menu-frame">
+            <button class="menu-button" data-screen="register">Register</button>
+            <button class="menu-button" data-screen="login">Login</button>
+          </div>
+      
+          <p class="credits">Maor Nezer, Ron Shukrun</p>
+          <p class="credits">ID: 206393456, 209721867</p>
+          <a href="https://yourportfolio.com" class="site-link" target="_blank">Visit my portfolio site</a>
+        </div>
+      </div>
+  
+      <!-- Register Screen -->
+      <div id="register" class="screen">
+        <h2>Register</h2>
+        <!-- Registration form goes here -->
+      </div>
+  
+      <!-- Login Screen -->
+      <div id="login" class="screen">
+        <h2>Login</h2>
+        <!-- Login form goes here -->
+      </div>
+  
+      <!-- Config Screen -->
+      <div id="config" class="screen">
+        <h2>Game Settings</h2>
+        <!-- Shoot key, duration, etc. -->
+      </div>
+  
+      <!-- Game Screen -->
+      <div id="game" class="screen">
+        <canvas id="gameCanvas" width="500" height="600"></canvas>
+        <audio id="fireSound" src="Audios/shut.mp3"></audio>
+        <audio id="hitSound" src="Audios/pop.mp3"></audio>
+      </div>
+  
+      <!-- Game Over Screen -->
+      <div id="gameover" class="screen">
+        <h2>Game Over</h2>
+        <!-- Final score and high scores -->
+      </div>
+    </main>
+
+    <footer>
+      <p>Contact us: your@email.com</p>
+      <p>&copy; 2025</p>
+    </footer>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal" style="display: none;">
+      <div style="background: white; width: 80%; margin: 100px auto; padding: 20px; position: relative;">
+        <button onclick="closeAbout()" style="position: absolute; top: 10px; left: 10px;">X</button>
+        <h2>About</h2>
+        <p>Authors, templates, plugins, challenges...</p>
+      </div>
+    </div>
+
+
+    <!-- JS Scripts -->
+    <script src="JS/BubbleInvaders.js"></script>
+    <script src="JS/navigation.js" defer></script>
+
   </body>
 </html>

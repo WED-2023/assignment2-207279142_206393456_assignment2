@@ -1,20 +1,213 @@
+/* === General Body Styles === */
 body {
-    background: url("../Images/Background.webp") repeat;
-    background-size: auto;
-    background-color: #333;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    background: url("../Images/stone-wall.webp") repeat;
+    background-size: auto;
+    box-sizing: border-box;
   }
-#gameCanvas {
-    background-size: cover;
-    margin: 0 auto;
+  
+  /* === Header and Footer === */
+  header, footer {
+    background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+    border: 6px solid gold;
+    color: yellow;
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 0 10px #00000088;
+    text-shadow: 1px 1px red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  header img {
+    height: 50px;
+  }
+  
+  /* === Navigation Bar === */
+  nav {
+    background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+    border-top: 6px solid gold;
+    border-bottom: 6px solid gold;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px #00000088;
+  }
+  
+  /* === Navigation Buttons === */
+  nav button {
+    background: transparent;
+    color: yellow;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+    border: 2px solid gold;
+    border-radius: 10px;
+    padding: 8px 16px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 1px 1px #000;
+  }
+  
+  nav button:hover {
+    background-color: rgba(255, 255, 0, 0.2);
+    transform: scale(1.05);
+  }
+  
+  /* === Main Screens === */
+  .screen {
+    display: none;
+  }
+  
+  .screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: calc(100vh - 180px); /* full screen minus header+nav+footer */
+    text-align: center;
+  }
+  
+  /* === Shared Screen Container === */
+  .screen-container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  /* === Screen Titles === */
+  .game-title {
+    color: yellow;
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-family: 'Comic Sans MS', cursive;
+    text-shadow: 2px 2px red;
+  }
+  
+  /* === Menu Frame Box === */
+  .menu-frame {
+    border: 8px solid gold;
+    padding: 30px 20px;
+    background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00000088;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* === Buttons Inside Screens === */
+  .menu-button {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: yellow;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+    padding: 12px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-shadow: 2px 2px #000;
+  }
+  
+  .menu-button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* === Supporting Text === */
+  .credits, .screen-container p {
+    color: yellow;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 18px;
+    text-shadow: 1px 1px red;
+    margin: 10px 0;
+  }
+  
+  /* === Links === */
+  .site-link {
+    color: cyan;
+    text-decoration: underline;
+    font-size: 14px;
+    font-family: 'Comic Sans MS', cursive;
+    text-shadow: 1px 1px #000;
+    margin-top: 10px;
+    display: inline-block;
+  }
+  
+  /* === Game Canvas === */
+  #gameCanvas {
+    background-color: black;
+    margin-bottom: 10px;
+    border: 4px solid gold;
+    box-shadow: 0 0 10px #000;
+  }
+  
+  /* === welcome === */
+
+  /* Two-column layout inside welcome menu */
+.menu-frame.two-column {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Wrapper for buttons */
+  .menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Character image styling */
+  .character-image {
+    height: 200px;
+    margin-left: 20px;
+  }
+    /* === welcome === */
+/* LOGO inside welcome screen */
+.logo-img {
+    height: 70px;
+    margin-bottom: 10px;
+  }
+  
+  /* Group container with yellow border */
+  .button-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #ff3c3c;
+    border: 4px solid gold;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #00000066;
+  }
+  
+  /* Individual buttons with yellow box */
+  .menu-button {
+    background: #ff1493;
+    border: 2px solid gold;
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: yellow;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-shadow: 2px 2px #000;
+  }
+  
+  .menu-button:hover {
+    transform: scale(1.05);
+    background-color: #ff3399;
   }
 
-.screen {
-    display: none;
-}
-  
-.screen.active {
-    display: block;
-}
+
+  .logo-img {
+    height: 150px; /* or try 150px */
+    margin-bottom: 10px;
+  }

@@ -33,8 +33,8 @@
         
               <!-- BUTTONS with yellow box -->
               <div class="button-box">
-                <button class="menu-button">Register</button>
-                <button class="menu-button">Login</button>
+                <button class="menu-button" data-screen="register">Register</button>
+                <button class="menu-button" data-screen="login">Login</button>
               </div>
         
               <!-- CHARACTERS -->
@@ -53,12 +53,34 @@
     <div id="register" class="screen">
       <div class="screen-container">
         <h1 class="game-title">Register</h1>
-        <div class="menu-frame">
-          <button class="menu-button" data-screen="welcome">← Back</button>
-          <p class="credits">Registration form coming soon</p>
-        </div>
+        <form id="registerForm" class="menu-frame">
+          <input type="text" id="username" placeholder="Username" required />
+          <input type="password" id="password" placeholder="Password" required />
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+          <input type="text" id="firstName" placeholder="First Name" required />
+          <input type="text" id="lastName" placeholder="Last Name" required />
+          <input type="email" id="email" placeholder="Email" required />
+          
+          <!-- Date of Birth -->
+          <div class="dob-select">
+            <select id="dobDay" required>
+              <option value="">Day</option>
+            </select>
+            <select id="dobMonth" required>
+              <option value="">Month</option>
+            </select>
+            <select id="dobYear" required>
+              <option value="">Year</option>
+            </select>
+          </div>
+          <button type="submit" class="menu-button">Register</button>
+          <button class="menu-button" data-screen="welcome" type="button">← Back</button>
+        </form>
+        <p id="registerError" class="credits" style="color: red;"></p>
       </div>
     </div>
+    
+    
 
     <!-- Login -->
     <div id="login" class="screen">
@@ -105,6 +127,8 @@
   <!-- JS -->
   <script src="JS/BubbleInvaders.js"></script>
   <script src="JS/navigation.js" defer></script>
+  <script src="JS/register.js" defer></script>
+
 </body>
 </html>
 

@@ -98,6 +98,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
   }
   
   /* === Buttons Inside Screens === */
@@ -118,6 +119,14 @@ body {
     transform: scale(1.05);
   }
   
+  #registerForm input,
+  #registerForm select {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+
+
   /* === Supporting Text === */
   .credits, .screen-container p {
     color: yellow;

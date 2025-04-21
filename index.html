@@ -15,6 +15,7 @@
     <button data-screen="register">Register</button>
     <button data-screen="login">Login</button>
     <button data-screen="game">Go to Game</button>
+    <button data-screen="config">Configuration</button>
     <button id="aboutBtn">About</button>
   </nav>
 
@@ -81,17 +82,60 @@
     </div>
     
     
-
     <!-- Login -->
     <div id="login" class="screen">
       <div class="screen-container">
         <h1 class="game-title">Login</h1>
-        <div class="menu-frame">
-          <button class="menu-button" data-screen="welcome">← Back</button>
-          <p class="credits">Login form coming soon</p>
-        </div>
+        <form id="loginForm" class="menu-frame">
+          <input type="text" id="loginUsername" placeholder="Username" required />
+          <input type="password" id="loginPassword" placeholder="Password" required />
+          <button type="submit" class="menu-button">Login</button>
+          <button class="menu-button" data-screen="welcome" type="button">← Back</button>
+        </form>
+        <p id="loginError" class="credits" style="color: red;"></p>
       </div>
     </div>
+
+  <!-- Configuration -->
+  <div id="config" class="screen">
+    <div class="screen-container">
+      <h1 class="game-title">Game Configuration</h1>
+      <form id="configForm" class="menu-frame">
+        
+        <!-- Shoot Key -->
+        <label for="shootKey" class="credits">Choose your shoot key:</label>
+        <select id="shootKey" required>
+          <option value="Space">Space</option>
+          <option value="A">A</option>
+          <option value="S">S</option>
+          <option value="D">D</option>
+          <option value="F">F</option>
+        </select>
+
+        <!-- Game Duration -->
+        <label for="gameDuration" class="credits">Game Duration (minutes):</label>
+        <input type="number" id="gameDuration" min="2" max="10" value="2" required />
+
+        <!-- Optional Color Picker -->
+        <label for="shipColor" class="credits">Choose Player Ship Color:</label>
+        <input type="color" id="shipColor" value="#ffffff" />
+
+        <!-- Buttons -->
+        <button type="submit" class="menu-button">Start Game</button>
+        <button type="button" class="menu-button" data-screen="welcome">← Back</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
 
     <!-- Game -->
     <div id="game" class="screen">
@@ -124,10 +168,20 @@
   </div>
 </div>
 
+
+
+
+
+
+
   <!-- JS -->
   <script src="JS/BubbleInvaders.js"></script>
   <script src="JS/navigation.js" defer></script>
   <script src="JS/register.js" defer></script>
+  <script src="JS/login.js" defer></script>
+  <script src="JS/config.js" defer></script>
+
+
 
 </body>
 </html>

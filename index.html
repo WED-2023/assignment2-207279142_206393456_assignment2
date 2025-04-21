@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bubble Invaders</title>
+  <title>Bubble Invaders</title>  <!-- Tab title -->
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/about.css" /> <!-- Modal CSS -->
 </head>
 
 <body>
@@ -40,7 +41,7 @@
               <img src="Images/player_front.png" alt="Characters" class="character-image">
             </div>
         
-            <p class="credits">Maor Nezer1, Ron Shukrun</p>
+            <p class="credits">Maor Nezer, Ron Shukrun</p>
             <p class="credits">ID: 206393456, 209721867</p>
             <a href="#" class="site-link">Visit our portfolio</a>
           </div>
@@ -90,13 +91,16 @@
   </footer>
 
   <!-- About Modal -->
-  <div id="aboutModal" class="modal" style="display: none;">
-    <div style="background: red; width: 80%; margin: 100px auto; padding: 20px; position: relative;">
-      <button onclick="closeAbout()" style="position: absolute; top: 10px; left: 10px;">X</button>
-      <h2>About</h2>
-      <p>Authors, templates, plugins, challenges...</p>
-    </div>
+<div id="aboutModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close">X</button>
+    <h2>About This Project</h2>
+    <p><strong>Submitted by:</strong> Maor Nezer & Ron Shukrun</p>
+    <p><strong>Template used:</strong> Custom game layout inspired by Bubble Trouble</p>
+    <p><strong>Plugin used:</strong> None (Vanilla JS only, no jQuery)</p>
+    <p><strong>Challenges:</strong> Canvas mechanics, modular file structure, responsive layout</p>
   </div>
+</div>
 
   <!-- JS -->
   <script src="JS/BubbleInvaders.js"></script>

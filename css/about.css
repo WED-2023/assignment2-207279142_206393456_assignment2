@@ -1,0 +1,54 @@
+/* === Modal Background Overlay === */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+  
+    justify-content: center;
+    align-items: center;
+  
+    z-index: 1000;
+  }
+  
+  /* === Modal Box === */
+  .modal-content {
+    background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+    border: 6px solid gold;
+    border-radius: 20px;
+    padding: 30px 40px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 0 20px #000;
+    color: yellow;
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    text-shadow: 1px 1px red;
+    position: relative;
+  }
+  
+  /* === Close Button === */
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    border: 2px solid gold;
+    border-radius: 50%;
+    color: yellow;
+    font-weight: bold;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-family: 'Comic Sans MS', cursive;
+    transition: background 0.2s;
+  }
+  
+  .modal-close:hover {
+    background-color: rgba(255, 255, 0, 0.2);
+  }
+  

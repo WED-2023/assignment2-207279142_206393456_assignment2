@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: pink repeat;
+    background: url("../Images/Background.webp") repeat;
     background-size: auto;
     box-sizing: border-box;
   }
@@ -150,7 +150,7 @@ body {
   
   /* === Game Canvas === */
   #gameCanvas {
-    background-image: url("../Images/back.webp"); 
+    background-image: pink; 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

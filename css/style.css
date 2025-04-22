@@ -150,7 +150,7 @@ body {
   
   /* === Game Canvas === */
   #gameCanvas {
-    background-image: pink; 
+    background-image: blue; 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

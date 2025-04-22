@@ -25,6 +25,17 @@
       screens.forEach(screen => screen.classList.remove("active"));
       const target = document.getElementById(screenId);
       if (target) target.classList.add("active");
+    
+      // Clear forms if returning
+      if (screenId === "login") {
+        document.getElementById("loginForm").reset();
+        document.getElementById("loginError").textContent = "";
+      }
+    
+      if (screenId === "register") {
+        document.getElementById("registerForm").reset();
+        document.getElementById("registerError").textContent = "";
+      }
     }
   
     // About
@@ -63,15 +74,17 @@
       logoutBtn.style.display = user ? "inline-block" : "none";
       loginBtn.style.display = user ? "none" : "inline-block";
     
-      if (greeting) {
-        greeting.textContent = user ? `שלום, ${user.firstName || user.username}!` : "";
-      }
+
     }
     updateLogoutVisibility();
 
     logoutBtn.addEventListener("click", () => {
       sessionStorage.removeItem("currentUser");
-      sessionStorage.removeItem("gameConfig"); 
+      sessionStorage.removeItem("gameConfig");
+    
+      const greeting = document.getElementById("userGreeting");
+      if (greeting) greeting.textContent = "";
+    
       alert("You have been logged out.");
       updateLogoutVisibility();
       showScreen("login");

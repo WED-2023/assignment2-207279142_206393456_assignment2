@@ -11,7 +11,19 @@ enemyImg.src = "Images/BubbleB.png";
 const bulletImg = new Image();
 bulletImg.src = "Images/bullet.png";
 
-
+document.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("navigate", e => {
+    if (e.detail === "game") {
+      const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+      if (config && config.background) {
+        const canvas = document.getElementById("gameCanvas");
+        canvas.style.backgroundImage = `url('Images/${config.background}')`;
+        canvas.style.backgroundSize = "cover";
+        canvas.style.backgroundPosition = "center";
+      }
+    }
+  });
+});
 
 // Sounds
 const fireSound = document.getElementById("fireSound");

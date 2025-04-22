@@ -1,0 +1,50 @@
+/* game.css – styling specific to game screen (canvas + game visuals) */
+
+#gameCanvas {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    border: 4px solid gold;
+    box-shadow: 0 0 10px #000;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #game .menu-frame {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 6px solid gold;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #000000cc;
+    text-align: center;
+  }
+  
+  #game button.menu-button {
+    margin-top: 20px;
+  }
+  
+  /* Background image selection thumbnails */
+  .background-options {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .background-options img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .background-options input[type="radio"]:checked + img {
+    border-color: gold;
+    box-shadow: 0 0 10px gold;
+  }
+  

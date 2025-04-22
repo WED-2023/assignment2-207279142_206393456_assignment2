@@ -7,21 +7,28 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/about.css" /> 
   <link rel="stylesheet" href="css/password.css" /> 
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/game.css">
+
+
 </head>
 
 <body>
 
 
-  <nav>
-    <button data-screen="welcome">Home</button>
-    <button data-screen="register">Register</button>
-    <button data-screen="login">Login</button>
-    <button id="logoutBtn" style="display: none;">Logout</button>
-    <button data-screen="game">let's play</button>
-
-    <button id="aboutBtn">About</button>
-    <span id="userGreeting" class="credits" style="margin-left: 20px;"></span>
-
+  <nav class="nav-container">
+    <div class="nav-left">
+      <span id="userGreeting" class="credits"></span>
+      <button id="logoutBtn" style="display: none;">Logout</button>
+    </div>
+  
+    <div class="nav-center">
+      <button data-screen="welcome">Home</button>
+      <button data-screen="register">Register</button>
+      <button data-screen="login">Login</button>
+      
+      <button id="aboutBtn">About</button>
+    </div>
   </nav>
 
   <main>
@@ -106,27 +113,46 @@
     <div class="screen-container">
       <h1 class="game-title">Game Configuration</h1>
       <form id="configForm" class="menu-frame">
+
         <!-- Shoot Key -->
-        <label for="shootKey" class="credits">Choose your shoot key:</label>
-        <select id="shootKey" required>
-          <option value="Space">Space</option>
-          <option value="A">A</option>
-          <option value="S">S</option>
-          <option value="D">D</option>
-          <option value="F">F</option>
-        </select>
+        <label for="shootKeyInput" class="credits">Press your shoot key:</label>
+        <input type="text" id="shootKeyInput" maxlength="1" readonly style="text-align: center;" required />
+
         <!-- Game Duration -->
         <label for="gameDuration" class="credits">Game Duration (minutes):</label>
         <input type="number" id="gameDuration" min="2" max="10" value="2" required />
-        <!-- Optional Color Picker -->
-        <label for="shipColor" class="credits">Choose Player Ship Color:</label>
-        <input type="color" id="shipColor" value="#ffffff" />
-        <!-- Buttons -->
+
+        <!-- Game Background -->
+        <label class="credits">Choose Game Background:</label>
+        <div class="background-options">
+          <label>
+            <input type="radio" name="background" value="game_back1.png" required />
+            <img src="Images/game_back1.png" alt="Background 1" />
+          </label>
+          <label>
+            <input type="radio" name="background" value="game_back2.jpeg" />
+            <img src="Images/game_back2.jpeg" alt="Background 2" />
+          </label>
+          <label>
+            <input type="radio" name="background" value="game_back3.png" />
+            <img src="Images/game_back3.png" alt="Background 3" />
+          </label>
+        </div>
+
         <button type="submit" class="menu-button">Start Game</button>
         <button type="button" class="menu-button" data-screen="welcome">← Back</button>
       </form>
+      <p id="configError" class="credits" style="color: red;"></p>
     </div>
   </div>
+
+      <!-- Buttons -->
+      <button type="submit" class="menu-button">Start Game</button>
+      <button type="button" class="menu-button" data-screen="welcome">← Back</button>
+    </form>
+    <p id="configError" class="credits" style="color: red;"></p>
+  </div>
+</div>
 
   <!-- Game -->
   <div id="game" class="screen protected">

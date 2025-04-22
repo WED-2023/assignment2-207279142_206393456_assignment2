@@ -1,0 +1,62 @@
+/* nav.css – styles for the top navigation bar */
+
+.nav-container {
+    position: relative;
+    height: 70px;
+    background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+    border-top: 6px solid gold;
+    border-bottom: 6px solid gold;
+    box-shadow: 0 0 10px #00000088;
+    padding: 0 20px;
+    font-family: 'Comic Sans MS', cursive;
+  }
+  
+  /* Left side – greeting and logout */
+  .nav-left {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Center – main navigation buttons */
+  .nav-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* All buttons inside the nav */
+  .nav-container button {
+    background: transparent;
+    color: yellow;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid gold;
+    border-radius: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 1px 1px #000;
+  }
+  
+  .nav-container button:hover {
+    background-color: rgba(255, 255, 0, 0.2);
+    transform: scale(1.05);
+  }
+  
+  /* Greeting message */
+  #userGreeting {
+    font-weight: bold;
+    font-size: 18px;
+    color: yellow;
+    text-shadow: 1px 1px red;
+    font-family: 'Comic Sans MS', cursive;
+  }

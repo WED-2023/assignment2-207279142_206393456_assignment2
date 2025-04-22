@@ -11,6 +11,9 @@ enemyImg.src = "Images/BubbleB.png";
 const bulletImg = new Image();
 bulletImg.src = "Images/bullet.png";
 
+// Player data maor
+
+
 // Sounds
 const fireSound = document.getElementById("fireSound");
 const hitSound = document.getElementById("hitSound");
@@ -19,9 +22,9 @@ const hitSound = document.getElementById("hitSound");
 const bubble = {
   x: canvas.width / 2,
   y: canvas.height - 250,
-  width: 240,
-  height: 320,
-  speed: 5
+  width: 120,
+  height: 80,
+  speed: 10
 };
 
 // Bullets and enemies

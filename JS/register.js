@@ -36,12 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const year = yearSelect.value;
       const errorEl = document.getElementById("registerError");
   
-      // Basic checks
-      if (!username || !password || !confirmPassword || !firstName || !lastName || !email || !day || !month || !year) {
-        errorEl.textContent = "Please fill in all fields.";
-        return;
-      }
-  
       if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
         errorEl.textContent = "Password must be at least 8 characters and contain both letters and numbers.";
         return;
@@ -63,22 +57,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       // All good - save user (in local/sessionStorage or array)
-      const user = {
-        username,
-        password,
-        firstName,
-        lastName,
-        email,
-        dob: `${year}-${month}-${day}`
-      };
+      const user = {username,password,firstName,lastName,email,dob: `${year}-${month}-${day}`};
   
       // Simulate user storage (in real app use DB or backend)
       let users = JSON.parse(sessionStorage.getItem("users")) || [];
       users.push(user);
       sessionStorage.setItem("users", JSON.stringify(users));
   
-      alert("Registration successful! You can now login.");
       document.querySelector('button[data-screen="login"]').click();
     });
+    // Handle password visibility toggle
+    document.querySelectorAll(".toggle-password").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-target");
+        const input = document.getElementById(targetId);
+        input.type = input.type === "password" ? "text" : "password";
+        btn.textContent = "👁";
+      });
+    });
   });
+
+
+  
   

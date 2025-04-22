@@ -11,7 +11,6 @@ enemyImg.src = "Images/BubbleB.png";
 const bulletImg = new Image();
 bulletImg.src = "Images/bullet.png";
 
-// Player data maor
 
 
 // Sounds

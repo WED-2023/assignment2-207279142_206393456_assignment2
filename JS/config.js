@@ -1,22 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const configForm = document.getElementById("configForm");
-  const shootKeyInput = document.getElementById("shootKeyInput");
+  const shootKey = document.getElementById("shootKey").value;
 
   // Listen for key press to set shoot key
-  shootKeyInput.addEventListener("keydown", (e) => {
+  shootKey.addEventListener("keydown", (e) => {
     e.preventDefault();
     const key = e.code === "Space" ? "Space" : e.key.toUpperCase();
-    shootKeyInput.value = key;
+    shootKey.value = key;
   });
 
   configForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const shootKey = shootKeyInput.value;
+    const shootKey = shootKey.value;
     const duration = parseInt(document.getElementById("gameDuration").value);
     const bgSelected = document.querySelector('input[name="background"]:checked');
 
     const errorEl = document.getElementById("configError");
+
     if (!shootKey || !bgSelected || isNaN(duration) || duration < 2) {
       errorEl.textContent = "Please complete all fields and set duration to at least 2 minutes.";
       return;

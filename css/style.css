@@ -162,16 +162,3 @@ header img {
   box-shadow: 0 0 10px #00000066;
 }
 
-#lifeContainer {
-  position: absolute;
-  top: 100px;    
-  right: 40px;    
-  display: flex;
-  gap: 10px;
-  z-index: 999;
-}
-
-.life-heart {
-  width: 40px;
-  height: 40px;
-}

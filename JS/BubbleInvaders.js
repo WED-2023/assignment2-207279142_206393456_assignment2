@@ -15,6 +15,10 @@ const heartImg = new Image();
 heartImg.src = "Images/Heart.png";
 
 let lives = 3;
+let speedIncreaseCount = 0;
+const maxSpeedIncreases = 4;
+let bulletBaseSpeed = 3;
+
 
 document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("navigate", e => {
@@ -115,7 +119,9 @@ function update() {
   if (keys["ArrowDown"] && bubble.y < canvas.height - bubble.height) {
     bubble.y += bubble.speed;
   }
-  if (keys[" "] || keys["Spacebar"]) {
+  if (shootKey === "SPACE" && (keys[" "] || keys["Spacebar"])) {
+    shoot();
+  } else if (shootKey !== "SPACE" && keys[shootKey]) {
     shoot();
   }
 
@@ -174,7 +180,7 @@ function createEnemyBullet(x, y) {
   return {
     x,
     y,
-    speed: 3,
+    speed: bulletBaseSpeed,
     width: 8,
     height: 16
   };
@@ -232,6 +238,41 @@ function updateLivesUI() {
   }
 }
 
+function increaseEnemySpeed() {
+  if (speedIncreaseCount < maxSpeedIncreases) {
+    enemySpeed += 0.5;
+    bulletBaseSpeed += 0.5;
+    speedIncreaseCount++;
+    showSpeedUpText();
+  }
+}
+
+// function showSpeedUpText() {
+//   const gameScreen = document.getElementById("game");
+//   const isVisible = gameScreen.classList.contains("active");
+
+//   if (!isVisible) return; // לא נמצא בעמוד המשחק
+
+//   const speedText = document.createElement("div");
+//   speedText.textContent = "🔥 SPEED UP!";
+//   speedText.style.position = "absolute";
+//   speedText.style.top = "100px";
+//   speedText.style.left = "50%";
+//   speedText.style.transform = "translateX(-50%)";
+//   speedText.style.fontSize = "36px";
+//   speedText.style.color = "orange";
+//   speedText.style.fontWeight = "bold";
+//   speedText.style.zIndex = "1000";
+//   speedText.style.animation = "fadeOut 2s ease-out";
+
+//   document.body.appendChild(speedText);
+
+//   setTimeout(() => {
+//     speedText.remove();
+//   }, 2000);
+// }
+
+
 function resetPlayerPosition() {
   bubble.x = initialPlayerPosition.x;
   bubble.y = initialPlayerPosition.y;
@@ -258,7 +299,7 @@ function draw() {
   enemyBullets.forEach(b => {
     ctx.beginPath();
     ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
-    ctx.fillStyle = "red"; // או כל צבע שתרצה
+    ctx.fillStyle = "red"; 
     ctx.fill();
     ctx.closePath();
   });
@@ -283,3 +324,4 @@ function loop() {
   }
 }
 loop();
+setInterval(increaseEnemySpeed, 5000);

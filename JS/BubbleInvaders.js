@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Sounds
 const fireSound = document.getElementById("fireSound");
 const hitSound = document.getElementById("hitSound");
+const hit = document.getElementById("hit");
 
 // Player data
 // const bubble = {
@@ -104,6 +105,9 @@ function shoot() {
     setTimeout(() => canShoot = true, 300);
   }
 }
+// Load shootKey from gameConfig
+const config = JSON.parse(sessionStorage.getItem("gameConfig")) || {};
+const shootKey = config.shootKey ? config.shootKey.toUpperCase() : "SPACE";
 
 function update() {
   const movementLimitY = canvas.height * 0.6;
@@ -217,6 +221,7 @@ function checkEnemyBulletHitsPlayer() {
       bullet.y > bubble.y &&
       bullet.y < bubble.y + bubble.height
     ) {
+      hit.play;
       lives--;
       resetPlayerPosition();
       enemyBullets.splice(i, 1);

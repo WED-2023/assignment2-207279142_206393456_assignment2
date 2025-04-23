@@ -18,6 +18,8 @@ let lives = 3;
 let speedIncreaseCount = 0;
 const maxSpeedIncreases = 4;
 let bulletBaseSpeed = 3;
+let showOuch = false;
+let gamePaused = false;
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -107,7 +109,7 @@ function shoot() {
 }
 // Load shootKey from gameConfig
 const config = JSON.parse(sessionStorage.getItem("gameConfig")) || {};
-const shootKey = config.shootKey ? config.shootKey.toUpperCase() : "SPACE";
+const shootKey = config.shootKey;
 
 function update() {
   const movementLimitY = canvas.height * 0.6;
@@ -123,9 +125,7 @@ function update() {
   if (keys["ArrowDown"] && bubble.y < canvas.height - bubble.height) {
     bubble.y += bubble.speed;
   }
-  if (shootKey === "SPACE" && (keys[" "] || keys["Spacebar"])) {
-    shoot();
-  } else if (shootKey !== "SPACE" && keys[shootKey]) {
+  if (keys[shootKey]) {
     shoot();
   }
 
@@ -221,8 +221,9 @@ function checkEnemyBulletHitsPlayer() {
       bullet.y > bubble.y &&
       bullet.y < bubble.y + bubble.height
     ) {
-      hit.play;
+      hit.play(); 
       lives--;
+      triggerOuch();
       resetPlayerPosition();
       enemyBullets.splice(i, 1);
 
@@ -234,6 +235,16 @@ function checkEnemyBulletHitsPlayer() {
     }
   }
   updateLivesUI();
+}
+
+function triggerOuch() {
+  showOuch = true;
+  gamePaused = true;
+
+  setTimeout(() => {
+    showOuch = false;
+    gamePaused = false;
+  }, 2000);
 }
 
 function updateLivesUI() {
@@ -251,32 +262,6 @@ function increaseEnemySpeed() {
     showSpeedUpText();
   }
 }
-
-// function showSpeedUpText() {
-//   const gameScreen = document.getElementById("game");
-//   const isVisible = gameScreen.classList.contains("active");
-
-//   if (!isVisible) return; // לא נמצא בעמוד המשחק
-
-//   const speedText = document.createElement("div");
-//   speedText.textContent = "🔥 SPEED UP!";
-//   speedText.style.position = "absolute";
-//   speedText.style.top = "100px";
-//   speedText.style.left = "50%";
-//   speedText.style.transform = "translateX(-50%)";
-//   speedText.style.fontSize = "36px";
-//   speedText.style.color = "orange";
-//   speedText.style.fontWeight = "bold";
-//   speedText.style.zIndex = "1000";
-//   speedText.style.animation = "fadeOut 2s ease-out";
-
-//   document.body.appendChild(speedText);
-
-//   setTimeout(() => {
-//     speedText.remove();
-//   }, 2000);
-// }
-
 
 function resetPlayerPosition() {
   bubble.x = initialPlayerPosition.x;
@@ -310,20 +295,36 @@ function draw() {
   });
 
   // Draw score
-  ctx.fillStyle = "black";
-  ctx.font = "20px Arial";
+  ctx.fillStyle = "yellow";
+  ctx.font = "20px 'Comic Sans MS', cursive";
   ctx.fillText("Score: " + score, 10, 20);
-
+  if (showOuch && !gameOver) {
+    ctx.fillStyle = "yellow";
+    ctx.font = "60px 'Comic Sans MS', cursive";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 4;
+  
+    ctx.strokeText("Ouch!", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("Ouch!", canvas.width / 2, canvas.height / 2);
+  }
+  
   if (gameOver) {
-    ctx.font = "40px Arial";
+    ctx.font = "60px 'Comic Sans MS', cursive";
     ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+    ctx.textAlign = "center";
+
   }
 
 }
 
 function loop() {
-  if (!gameOver) {
-    update();
+  if(!gameOver){
+    if (!gamePaused) {
+      update();
+  
+    }
     draw();
     requestAnimationFrame(loop);
   }

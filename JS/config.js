@@ -1,37 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
   const configForm = document.getElementById("configForm");
-  const shootKey = document.getElementById("shootKey").value;
-
-  // Listen for key press to set shoot key
-  shootKey.addEventListener("keydown", (e) => {
-    e.preventDefault();
-    const key = e.code === "Space" ? "Space" : e.key.toUpperCase();
-    shootKey.value = key;
-  });
+  const shootKeySelect = document.getElementById("shootKey");
+  const durationInput = document.getElementById("gameDuration");
+  const errorEl = document.getElementById("configError");
 
   configForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const shootKey = shootKey.value;
-    const duration = parseInt(document.getElementById("gameDuration").value);
+    const shootKey = shootKeySelect.value;
+    const duration = parseInt(durationInput.value);
     const bgSelected = document.querySelector('input[name="background"]:checked');
-
-    const errorEl = document.getElementById("configError");
 
     if (!shootKey || !bgSelected || isNaN(duration) || duration < 2) {
       errorEl.textContent = "Please complete all fields and set duration to at least 2 minutes.";
       return;
     }
 
+    // Check if user is logged in
+    const user = sessionStorage.getItem("currentUser");
+    if (!user) {
+      alert("Please log in before starting the game.");
+      window.dispatchEvent(new CustomEvent("navigate", { detail: "login" }));
+      return;
+    }
+
+    // Save config
     const config = {
-      shootKey,
+      shootKey: shootKey.toUpperCase(),
       duration,
       background: bgSelected.value
     };
 
     sessionStorage.setItem("gameConfig", JSON.stringify(config));
 
-    // Go to game
+    // Navigate to game
     const event = new CustomEvent("navigate", { detail: "game" });
     window.dispatchEvent(event);
   });

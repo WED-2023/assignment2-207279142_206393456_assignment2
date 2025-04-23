@@ -24,8 +24,8 @@
   
     <div class="nav-center">
       <button data-screen="welcome">Home</button>
-      <button data-screen="register">Register</button>
-      <button data-screen="login">Login</button>
+      <button data-screen="register" id="navRegister">Register</button>
+      <button data-screen="login" id="navLogin">Login</button>
       <button data-screen="game">let's play</button>
       <button data-screen="config">Settings</button>
       <button id="aboutBtn">About</button>
@@ -43,8 +43,8 @@
             <div class="menu-frame two-column">
               <!-- BUTTONS with yellow box -->
               <div class="button-box">
-                <button class="menu-button" data-screen="register">Register</button>
-                <button class="menu-button" data-screen="login">Login</button>
+                <button class="menu-button" data-screen="register" id="welcomeRegisterBtn">Register</button>
+                <button class="menu-button" data-screen="login" id="welcomeLoginBtn">Login</button>
               </div>
               <!-- CHARACTERS -->
               <img src="Images/player_front.png" alt="Characters" class="character-image">
@@ -90,7 +90,7 @@
           <button type="submit" class="menu-button">Submit</button>
           <button class="menu-button" data-screen="welcome" type="button">← Back</button>
         </form>
-        <p id="registerError" class="credits" style="color: red;"></p>
+        <p id="registerError" class="credits"></p>
       </div>
     </div>
     
@@ -105,7 +105,7 @@
         <button type="submit" class="menu-button">Login</button>
         <button class="menu-button" data-screen="welcome" type="button">← Back</button>
       </form>
-      <p id="loginError" class="credits" style="color: red;"></p>
+      <p id="loginError" class="credits""></p>
     </div>
   </div>
 
@@ -114,41 +114,6 @@
     <div class="screen-container">
       <h1 class="game-title">Game Configuration</h1>
       <form id="configForm" class="menu-frame">
-
-        <!-- Shoot Key -->
-        <label for="shootKey" class="credits">Choose your shoot key:</label>
-        <select id="shootKey" required>
-          <option value="">-- Select Key --</option>
-          <option value="Space">Space</option>
-          <option value="Enter">Enter</option>
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-          <option value="D">D</option>
-          <option value="E">E</option>
-          <option value="F">F</option>
-          <option value="G">G</option>
-          <option value="H">H</option>
-          <option value="I">I</option>
-          <option value="J">J</option>
-          <option value="K">K</option>
-          <option value="L">L</option>
-          <option value="M">M</option>
-          <option value="N">N</option>
-          <option value="O">O</option>
-          <option value="P">P</option>
-          <option value="Q">Q</option>
-          <option value="R">R</option>
-          <option value="S">S</option>
-          <option value="T">T</option>
-          <option value="U">U</option>
-          <option value="V">V</option>
-          <option value="W">W</option>
-          <option value="X">X</option>
-          <option value="Y">Y</option>
-          <option value="Z">Z</option>
-
-        </select>
 
         <!-- Game Duration -->
         <label for="gameDuration" class="credits">Game Duration (minutes):</label>
@@ -174,11 +139,11 @@
         <button type="submit" class="menu-button">Start Game</button>
         <button type="button" class="menu-button" data-screen="welcome">← Back</button>
       </form>
-      <p id="configError" class="credits" style="color: red;"></p>
+      <p id="configError" class="credits"></p>
     </div>
   </div>
     </form>
-    <p id="configError" class="credits" style="color: red;"></p>
+    <p id="configError" class="credits"></p>
   </div>
 </div>
 

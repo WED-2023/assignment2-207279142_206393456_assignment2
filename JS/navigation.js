@@ -18,6 +18,8 @@
         }
   
         showScreen(targetId);
+        updateUIForUser();
+
       });
     });
   
@@ -67,14 +69,7 @@
     const logoutBtn = document.getElementById("logoutBtn");
 
     function updateLogoutVisibility() {
-      const user = JSON.parse(sessionStorage.getItem("currentUser"));
-      const loginBtn = document.querySelector('button[data-screen="login"]');
-      const greeting = document.getElementById("userGreeting");
-    
-      logoutBtn.style.display = user ? "inline-block" : "none";
-      loginBtn.style.display = user ? "none" : "inline-block";
-    
-
+      updateUIForUser();
     }
     updateLogoutVisibility();
 
@@ -94,6 +89,44 @@
     window.showScreen = showScreen;
 
     window.addEventListener("navigate", (e) => {
-      showScreen(e.detail);
-});
+      const targetId = e.detail;
+      const targetScreen = document.getElementById(targetId);
+    
+      if (targetScreen.classList.contains("protected")) {
+        const user = JSON.parse(sessionStorage.getItem("currentUser"));
+        if (!user) {
+          alert("You must be logged in to access this screen.");
+          showScreen("login");
+          return;
+        }
+      }
+    
+      showScreen(targetId);
+    });
+
+
+    function updateUIForUser() {
+      const user = JSON.parse(sessionStorage.getItem("currentUser"));
+      const loggedIn = !!user;
+    
+      //navigation buttons
+      document.querySelector('[data-screen="login"]').style.display = loggedIn ? "none" : "inline-block";
+      document.querySelector('[data-screen="register"]').style.display = loggedIn ? "none" : "inline-block";
+      document.getElementById("logoutBtn").style.display = loggedIn ? "inline-block" : "none";
+    
+      // Welcome screen
+      const welcomeLogin = document.querySelector('#welcome [data-screen="login"]');
+      const welcomeRegister = document.querySelector('#welcome [data-screen="register"]');
+      if (welcomeLogin) welcomeLogin.style.display = loggedIn ? "none" : "inline-block";
+      if (welcomeRegister) welcomeRegister.style.display = loggedIn ? "none" : "inline-block";
+    
+      // Greeting
+      const greeting = document.getElementById("userGreeting");
+      if (greeting) greeting.textContent = loggedIn ? `Hello, ${user.firstName || user.username}!` : "";
+
+      const buttonBox = document.querySelector('#welcome .button-box');
+      if (buttonBox) buttonBox.style.display = loggedIn ? "none" : "block";
+    }
+    window.updateUIForUser = updateUIForUser;
+
   });

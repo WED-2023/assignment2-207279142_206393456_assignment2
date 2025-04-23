@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
       sessionStorage.setItem("currentUser", JSON.stringify(user));
 
       // Update UI for logged-in state
-      document.getElementById("logoutBtn").style.display = "inline-block";
-      document.querySelector('button[data-screen="login"]').style.display = "none";
+      if (typeof updateUIForUser === "function") updateUIForUser();
+
 
       const greeting = document.getElementById("userGreeting");
       if (greeting) {
@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("currentUser", JSON.stringify(user));
 
     // Update UI for logged-in state
-    document.getElementById("logoutBtn").style.display = "inline-block";
-    document.querySelector('button[data-screen="login"]').style.display = "none";
+    if (typeof updateUIForUser === "function") updateUIForUser();
+
 
     const greeting = document.getElementById("userGreeting");
     if (greeting) {

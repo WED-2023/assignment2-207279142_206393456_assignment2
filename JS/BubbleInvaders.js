@@ -14,27 +14,95 @@ bulletImg.src = "Images/bullet.png";
 const heartImg = new Image();
 heartImg.src = "Images/Heart.png";
 
+let canShoot = true;
+let score = 0;
+let gameStartTime = null;
+let gameDurationInSec = 0;
+let gameOver = false;
+
+let enemyDirection = 1; 
+let enemySpeed = 1; 
+
+let enemyBullets = []; // מערך של כדורי אויב
+let lastEnemyShotY = canvas.height;
+
 let lives = 3;
 let speedIncreaseCount = 0;
 const maxSpeedIncreases = 4;
 let bulletBaseSpeed = 3;
 let showOuch = false;
 let gamePaused = false;
+let endMessage = "";
 
+
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   window.addEventListener("navigate", e => {
+//     if (e.detail === "game") {
+//       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+//       if (config && config.background) {
+//         const canvas = document.getElementById("gameCanvas");
+//         canvas.style.backgroundImage = `url('Images/${config.background}')`;
+//         canvas.style.backgroundSize = "cover";
+//         canvas.style.backgroundPosition = "center";
+//       }
+//     }
+//   });
+// });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   window.addEventListener("navigate", e => {
+//     if (e.detail === "game") {
+//       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+
+//       if (config && config.background) {
+//         const canvas = document.getElementById("gameCanvas");
+//         canvas.style.backgroundImage = `url('Images/${config.background}')`;
+//         canvas.style.backgroundSize = "cover";
+//         canvas.style.backgroundPosition = "center";
+//       }
+//       if (config && config.duration) {
+//         const durationInMs = config.duration * 60 * 1000;
+
+//         setTimeout(() => {
+//           if (!gameOver) {
+//             endGameByTime();
+//           }
+//         }, durationInMs);
+//       }
+//     }
+//   });
+// });
 
 document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("navigate", e => {
     if (e.detail === "game") {
       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+
       if (config && config.background) {
         const canvas = document.getElementById("gameCanvas");
         canvas.style.backgroundImage = `url('Images/${config.background}')`;
         canvas.style.backgroundSize = "cover";
         canvas.style.backgroundPosition = "center";
       }
+
+      // ⬇️ הכניסי את זה כאן בדיוק
+      if (config && config.duration) {
+        gameDurationInSec = config.duration * 60;
+        gameStartTime = Date.now();
+
+        const durationInMs = gameDurationInSec * 1000;
+
+        setTimeout(() => {
+          if (!gameOver) {
+            endGameByTime();
+          }
+        }, durationInMs);
+      }
     }
   });
 });
+
 
 // Sounds
 const fireSound = document.getElementById("fireSound");
@@ -67,7 +135,14 @@ const bullets = [];
 const enemies = [];
 
 const keys = {};
-document.addEventListener("keydown", e => keys[e.key] = true);
+// document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keydown", e => {
+  if ([" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault();
+  }
+  keys[e.key] = true;
+});
+
 document.addEventListener("keyup", e => delete keys[e.key]);
 
 // Create 4x5 enemies
@@ -88,16 +163,6 @@ for (let r = 0; r < enemyRows; r++) {
   }
 }
 
-
-let canShoot = true;
-let score = 0;
-let gameOver = false;
-
-let enemyDirection = 1; 
-let enemySpeed = 1; 
-
-let enemyBullets = []; // מערך של כדורי אויב
-let lastEnemyShotY = canvas.height;
 
 function shoot() {
   if (canShoot) {
@@ -164,19 +229,20 @@ function update() {
   for (let i = 0; i < enemies.length; i++) {
     enemies[i].x += enemyDirection * enemySpeed;
 
-    // בדיקה אם אחד מהם הגיע לקצה
     if (enemies[i].x + 50 >= canvas.width || enemies[i].x - 50 <= 0) {
       reachedEdge = true;
     }
   }
 
-  // אם הגיעו לקצה – שנה כיוון
   if (reachedEdge) {
     enemyDirection *= -1;
   }
   handleEnemyShooting();
   checkEnemyBulletHitsPlayer();
-
+  if (enemies.length === 0 && !gameOver) {
+    endMessage = "Champion!";
+    gameOver = true;
+  }
 }
 
 
@@ -191,20 +257,19 @@ function createEnemyBullet(x, y) {
 }
 
 function handleEnemyShooting() {
-  // תנאי לירי
   if (enemyBullets.length === 0 || enemyBullets[enemyBullets.length - 1].y > canvas.height * 0.75) {
     const randomEnemy = enemies[Math.floor(Math.random() * enemies.length)];
     if (randomEnemy) {
       enemyBullets.push(createEnemyBullet(randomEnemy.x, randomEnemy.y + 20));
     }
   }
-
-  // תזוזה של כל כדור אויב
+  
+  
   for (let bullet of enemyBullets) {
     bullet.y += bullet.speed;
   }
 
-  // מחיקת כדורים שיצאו מהמסך
+
   for (let i = enemyBullets.length - 1; i >= 0; i--) {
     if (enemyBullets[i].y > canvas.height) {
       enemyBullets.splice(i, 1);
@@ -229,6 +294,7 @@ function checkEnemyBulletHitsPlayer() {
 
       if (lives <= 0) {
         gameOver = true;
+        endMessage = "You Lost!";
       }
 
       break;
@@ -263,6 +329,26 @@ function increaseEnemySpeed() {
   }
 }
 
+function getRemainingTime() {
+  if (!gameStartTime || gameOver) return "00:00";
+
+  const elapsedSec = Math.floor((Date.now() - gameStartTime) / 1000);
+  const remaining = Math.max(0, gameDurationInSec - elapsedSec);
+  const minutes = Math.floor(remaining / 60);
+  const seconds = remaining % 60;
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+
+function endGameByTime() {
+  if (score < 100) {
+    endMessage = "You can do better (" + score + ")";
+  } else {
+    endMessage = "Winner!";
+  }
+  gameOver = true;
+}
+
 function resetPlayerPosition() {
   bubble.x = initialPlayerPosition.x;
   bubble.y = initialPlayerPosition.y;
@@ -293,11 +379,20 @@ function draw() {
     ctx.fill();
     ctx.closePath();
   });
+  // Draw timer (top right)
+  ctx.fillStyle = "yellow";
+  ctx.font = "20px 'Comic Sans MS', cursive";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "top";
+  ctx.fillText(getRemainingTime(), canvas.width - 20, 10);
 
   // Draw score
   ctx.fillStyle = "yellow";
   ctx.font = "20px 'Comic Sans MS', cursive";
-  ctx.fillText("Score: " + score, 10, 20);
+  ctx.textAlign = "left";           
+  ctx.textBaseline = "top";      
+  ctx.fillText("Score: " + score, 20, 10);
+
   if (showOuch && !gameOver) {
     ctx.fillStyle = "yellow";
     ctx.font = "60px 'Comic Sans MS', cursive";
@@ -311,11 +406,16 @@ function draw() {
   }
   
   if (gameOver) {
-    ctx.font = "60px 'Comic Sans MS', cursive";
-    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+    ctx.font = "40px 'Comic Sans MS', cursive";
     ctx.textAlign = "center";
-
+    ctx.textBaseline = "middle";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 3;
+  
+    ctx.strokeText(endMessage, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(endMessage, canvas.width / 2, canvas.height / 2);
   }
+  
 
 }
 

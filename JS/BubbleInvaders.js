@@ -368,13 +368,17 @@ function draw() {
   }
 }
 // Save score to localStorage
-function saveScore(username, score) {
+function saveScore(score) {
+  const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+  const username = currentUser?.username || "Guest";
+
   const player = { username, score };
   highScores.push(player);
   highScores.sort((a, b) => b.score - a.score); // Highest first
   localStorage.setItem("highScores", JSON.stringify(highScores));
   updateHighScoreTable();
 }
+
 
 // Render high scores in HTML table
 function updateHighScoreTable() {
@@ -391,7 +395,8 @@ function updateHighScoreTable() {
 }
 function showHighScores() {
   const modal = document.getElementById("highScoresModal");
-  const playerName = sessionStorage.getItem("username");
+  const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+  const playerName = currentUser?.firstName || currentUser?.username || "Player";
   const playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
   // Clear the previous table entries
@@ -402,7 +407,7 @@ function showHighScores() {
   playerNameElement.textContent = `${playerName}'s High Scores`;
 
   playerScores
-    .filter(score => score.username === playerName)
+    .filter(score => score.username === currentUser?.username)
     .sort((a, b) => b.score - a.score)
     .forEach((score, index) => {
       const row = tableBody.insertRow();
@@ -413,6 +418,7 @@ function showHighScores() {
     });
 
   modal.style.display = "flex";
+
   // Close the modal when the X is clicked
   document.querySelector(".modal-close").addEventListener("click", () => {
     modal.style.display = "none";
@@ -420,8 +426,9 @@ function showHighScores() {
 }
 
 
+
 function endGame(score) {
-  saveScore(currentUsername, score); 
+  saveScore(score); 
   showHighScores(); 
 }
 function loop() {

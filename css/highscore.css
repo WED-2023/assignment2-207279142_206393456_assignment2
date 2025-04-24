@@ -52,27 +52,25 @@
 
 /* === High Scores Table === */
 #highScoresTable {
-    margin-top: 20px;
-    width: 100%;
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
     border-collapse: collapse;
+    width: 100%;
+}
+
+#highScoresTable thead, #highScoresTable tbody {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 #highScoresTable th, #highScoresTable td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px 20px;
+    border:hidden;
     text-align: center;
-
-}
-
-#highScoresTable th {
-    background-color: #ff1493;
+    vertical-align: middle;
     color: yellow;
-    text-align: center;
-
-}
-
-#highScoresTable td {
-    color: white;
 }
 
 /* === Styling for the Player Name in the Modal === */
@@ -82,11 +80,6 @@
     margin-bottom: 20px;
     color: yellow;
 }
-
-/* === Scrollable Table Body === */
-#highScoresTable tbody {
-    max-height: 300px;
-    overflow-y: auto;
-    display: block;
-    color: white;
+#highScoresTable tbody tr {
+    height: 40px;
 }

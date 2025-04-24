@@ -5,8 +5,8 @@ const ctx = canvas.getContext("2d");
 const player = new Image();
 player.src = "Images//player_front.png";
 
-const enemyImg = new Image();
-enemyImg.src = "Images/BubbleB.png";
+// const enemyImg = new Image();
+// enemyImg.src = "Images/BubbleB.png";
 
 const bulletImg = new Image();
 bulletImg.src = "Images/bullet.png";
@@ -19,9 +19,7 @@ const fireSound = document.getElementById("fireSound");
 const hitSound = document.getElementById("hitSound");
 const hit = document.getElementById("hit");
 
-
-
-
+// Global Variables
 let canShoot = true;
 let score = 0;
 let gameStartTime = null;
@@ -46,6 +44,14 @@ const bullets = [];
 const enemies = [];
 const keys = {};
 const maxSpeedIncreases = 4;
+const enemyRadius = 30;
+
+const enemyColors = [
+  "#FF0000", // red
+  "#FFA500", // orange
+  "#FFFF00", // yello
+  "#008000"  // green
+];
 
 // Player's personal high scores – stored in localStorage per session
 let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
@@ -59,7 +65,6 @@ const bubble = {
   height: 80,
   speed: 10
 };
-//const initialPlayerPosition = { x: bubble.x, y: bubble.y };
 
 // Size Enemies
 const enemyRows = 4, enemyCols = 5;
@@ -84,39 +89,6 @@ document.addEventListener("keydown", e => {
 document.addEventListener("keyup", e => {
   delete keys[e.code];
 });
-
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   // This is the "Let's Play" button in the navbar
-//   const startGameBtn = document.querySelector('[data-screen="game"]');
-
-//   // This is the "New Game" button inside the actual game screen
-//   const newGameBtn = document.getElementById("newGameBtn");
-
-//   // When clicking "Let's Play", we prepare the config (but do NOT start the game yet)
-//   startGameBtn.addEventListener("click", () => {
-//     const config = JSON.parse(sessionStorage.getItem("gameConfig"));
-//     if (!config) {
-//       alert("Please set your game settings first.");
-//       return;
-//     }
-  
-//     // Start a new game directly from the Let's Play button
-//     startNewGame();
-//   });
-
-//   // "New Game" actually starts a fresh game with current config
-//   if (newGameBtn) {
-//     newGameBtn.addEventListener("click", startNewGame);
-//   }
-//   // Stop music when exiting the game screen
-//   document.querySelector('#game .menu-frame button[data-screen="welcome"]')
-//   .addEventListener("click", () => {
-//     const bgm = document.getElementById("gameMusic");
-//     bgm.pause();
-//   });
-// });
 
 document.addEventListener("DOMContentLoaded", () => {
   // This is the "Let's Play" button in the navbar
@@ -188,9 +160,12 @@ function update() {
   let reachedEdge = false;
   enemies.forEach(e => {
     e.x += enemyDirection * enemySpeed;
-    if (e.x + 50 >= canvas.width || e.x - 50 <= 0) reachedEdge = true;
+    if (e.x + enemyRadius >= canvas.width || e.x - enemyRadius <= 0) {
+      reachedEdge = true;
+    }
   });
   if (reachedEdge) enemyDirection *= -1;
+  
 
   handleEnemyShooting();
   checkEnemyBulletHitsPlayer();
@@ -205,10 +180,31 @@ function update() {
   }
 }
 
+// function handleEnemyShooting() {
+//   if (enemyBullets.length === 0 || enemyBullets[enemyBullets.length - 1].y > canvas.height * 0.75) {
+//     const enemy = enemies[Math.floor(Math.random() * enemies.length)];
+//     if (enemy) enemyBullets.push({ x: enemy.x, y: enemy.y + 20, speed: bulletBaseSpeed });
+//   }
+
+//   enemyBullets.forEach(b => b.y += b.speed);
+//   for (let i = enemyBullets.length - 1; i >= 0; i--) {
+//     if (enemyBullets[i].y > canvas.height) enemyBullets.splice(i, 1);
+//   }
+// }
 function handleEnemyShooting() {
-  if (enemyBullets.length === 0 || enemyBullets[enemyBullets.length - 1].y > canvas.height * 0.75) {
+  if (
+    enemyBullets.length === 0 ||
+    enemyBullets[enemyBullets.length - 1].y > canvas.height * 0.75
+  ) {
     const enemy = enemies[Math.floor(Math.random() * enemies.length)];
-    if (enemy) enemyBullets.push({ x: enemy.x, y: enemy.y + 20, speed: bulletBaseSpeed });
+    if (enemy) {
+      enemyBullets.push({
+        x: enemy.x,
+        y: enemy.y + 20,
+        speed: bulletBaseSpeed,
+        color: enemy.color 
+      });
+    }
   }
 
   enemyBullets.forEach(b => b.y += b.speed);
@@ -331,13 +327,14 @@ let currentUsername = sessionStorage.getItem("username");
   for (let r = 0; r < enemyRows; r++) {
     for (let c = 0; c < enemyCols; c++) {
       enemies.push({
-        x: 60 + c * 80,
-        y: 50 + r * 60,
-        row: r
+        x: enemyRadius + 10 + c * (enemyRadius * 2 + 10),
+        y: enemyRadius + 10 + r * (enemyRadius * 2 + 10),
+        row: r,
+        color: enemyColors[r]
       });
     }
   }
-
+  
   // Start speed acceleration every 5 seconds (up to 4 times)
   speedIntervalId = setInterval(() => {
     if (speedIncreaseCount < maxSpeedIncreases) {
@@ -374,18 +371,32 @@ function draw() {
 
   // Draw bullets
   bullets.forEach(b => ctx.drawImage(bulletImg, b.x - 8, b.y, 16, 32));
+  
+// Draw enemies as colored circles
+  enemies.forEach(e => {
+    ctx.beginPath();
+    ctx.arc(e.x, e.y, enemyRadius, 0, Math.PI * 2);
+    ctx.fillStyle = e.color;
+    ctx.fill();
 
-  // Draw enemies
-  enemies.forEach(e => ctx.drawImage(enemyImg, e.x - 50, e.y - 50, 100, 100));
+    // Outline with transparency
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
 
-  // Draw enemy bullets
+    ctx.closePath();
+  });
+
+
+  // Draw enemy bullets with their own color
   enemyBullets.forEach(b => {
     ctx.beginPath();
     ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = b.color || "red";  // אם משהו משתבש, נופשים לאדום
     ctx.fill();
     ctx.closePath();
   });
+
 
   // Draw remaining time and current score
   ctx.fillStyle = "yellow";

@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // שמירת ההגדרות
     const config = {
       duration,
       background: bgSelected.value
@@ -31,6 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // הצגת הודעה בלבד
     alert("Settings saved! You may now start the game from the main menu.");
-    errorEl.textContent = "✓ Settings saved successfully.";
+    errorEl.textContent = "";
   });
 });

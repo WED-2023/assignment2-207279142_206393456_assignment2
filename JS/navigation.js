@@ -20,7 +20,6 @@
           if (targetId === "game") {
             const config = JSON.parse(sessionStorage.getItem("gameConfig"));
             if (!config) {
-              alert("Please set your game settings first.");
               return;
             }
           }

@@ -1,26 +1,25 @@
-/* === Modal Background Overlay === */
+/* === Modal Background Overlay === 
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7); /* רקע כהה למחוץ למודאל */
+    background-color: rgba(0,0,0,0.7); 
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
-/* === Modal Box === */
 .modal-content {
-    background: linear-gradient(to bottom, #ff3c3c, #ff1493); /* צבע רקע למודאל */
+    background: linear-gradient(to bottom, #ff3c3c, #ff1493); 
     border: 6px solid gold;
     border-radius: 20px;
     padding: 30px 40px;
     width: 400px;
     max-width: 90%;
-    box-shadow: 0 0 20px #000; /* הצללה */
+    box-shadow: 0 0 20px #000;
     color: yellow;
     font-family: 'Comic Sans MS', cursive;
     text-align: center;
@@ -28,7 +27,6 @@
     position: relative;
 }
 
-/* === Close Button === */
 .modal-close {
     position: absolute;
     top: 10px;
@@ -50,7 +48,7 @@
     background-color: rgba(255, 255, 0, 0.2);
 }
 
-/* === High Scores Table === */
+/* === High Scores Table === 
 #highScoresTable {
     display: block;
     max-height: 300px;
@@ -73,7 +71,7 @@
     color: yellow;
 }
 
-/* === Styling for the Player Name in the Modal === */
+/* === Styling for the Player Name in the Modal ===
 #playerNameHighScore {
     font-size: 24px;
     font-weight: bold;
@@ -83,3 +81,92 @@
 #highScoresTable tbody tr {
     height: 40px;
 }
+    */  
+    /* === highscore.css ===
+   Styles for the high score modal and table
+*/
+
+/* Modal overlay background */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal content box */
+  .modal-content {
+    padding: 30px 40px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+  }
+  
+  /* Close button inside modal */
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    border: 2px solid gold;
+    border-radius: 50%;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  
+  .modal-close:hover {
+    background-color: rgba(255, 255, 0, 0.2);
+  }
+  
+  /* Player name title in modal */
+  #playerNameHighScore {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Table for scores */
+  #highScoresTable {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #highScoresTable thead,
+  #highScoresTable tbody {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  #highScoresTable th,
+  #highScoresTable td {
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #ff1493;
+    color: yellow;
+  }
+  
+  #highScoresTable tbody tr {
+    height: 40px;
+  }
+  
+  #highScoresTable tbody tr:hover {
+    background-color: #ff69b4;
+    cursor: default;
+  }
+  

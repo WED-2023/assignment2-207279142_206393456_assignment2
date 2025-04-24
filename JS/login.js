@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const user = users.find(u => u.username === username && u.password === password);
 
     if (!user) {
-      errorEl.textContent = "Username or password is incorrect.";
+      alert("Username or password is incorrect.");
       return;
     }
 

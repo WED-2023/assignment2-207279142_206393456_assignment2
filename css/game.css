@@ -1,4 +1,4 @@
-/* game.css – styling specific to game screen (canvas + game visuals) */
+/* game.css – styling specific to game screen (canvas + game visuals) 
 
 #gameCanvas {
     background-size: cover;
@@ -14,13 +14,12 @@
     height: 100%;
   }
   .canvas-wrapper {
-    position: relative; /* מאפשר הצבה אבסולוטית יחסית לקנבס */
+    position: relative; 
     width: 700px;
-    margin: 0 auto; /* מרכז את הקנבס */
+    margin: 0 auto; 
 }  
   
 
-  /* Background image selection thumbnails */
   .background-options {
     display: flex;
     gap: 15px;
@@ -44,7 +43,7 @@
   }
 
   .menu-frame {
-    position: relative; /* כדי שנוכל למקם לבבות יחסית אליה */
+    position: relative; 
     background-color: rgba(0, 0, 0, 0.6);
     border: 6px solid gold;
     padding: 20px;
@@ -54,10 +53,9 @@
   }
 
 
-  /* Hearts container */
   #lifeContainer {
     position: absolute;
-    top: -50px; /* מרחיק אותו מהקנבס */
+    top: -50px; 
     right: 10px;
     display: flex;
     gap: 10px;
@@ -107,4 +105,50 @@
 #highScoreTable th {
   background-color: #333;
   color: white;
+}
+*/
+/* === game.css ===
+   Styles specific to the gameplay screen and canvas
+*/
+
+#gameCanvas {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+  border: 4px solid gold;
+  box-shadow: 0 0 10px #000;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 100%;
+}
+
+/* Position container around canvas for relative positioning */
+.canvas-wrapper {
+  position: relative;
+  width: 700px;
+  margin: 0 auto;
+}
+
+/* Life hearts display, placed outside the top-right of the canvas */
+#lifeContainer {
+  position: absolute;
+  top: -50px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.life-heart {
+  width: 40px;
+  height: 40px;
+}
+
+/* Optional: animation keyframes */
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }

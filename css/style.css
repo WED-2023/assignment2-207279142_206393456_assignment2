@@ -1,4 +1,4 @@
-/* === General Body Styles === */
+/* === General Body Styles === 
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ body {
   box-sizing: border-box;
 }
 
-/* === Header and Footer === */
+/* === Header and Footer === 
 header, footer {
   background: linear-gradient(to bottom, #ff3c3c, #ff1493);
   border: 6px solid gold;
@@ -28,7 +28,7 @@ header img {
   height: 50px;
 }
 
-/* === Main Screens === */
+/* === Main Screens === 
 .screen {
   display: none;
 }
@@ -42,13 +42,13 @@ header img {
   text-align: center;
 }
 
-/* === Shared Screen Container === */
+/* === Shared Screen Container === 
 .screen-container {
   max-width: 600px;
   margin: auto;
 }
 
-/* === Screen Titles === */
+/* === Screen Titles === 
 .game-title {
   color: yellow;
   font-size: 36px;
@@ -69,7 +69,7 @@ header img {
   gap: 15px;
 }
 
-/* === Buttons Inside Screens === */
+/* === Buttons Inside Screens === 
 .menu-button {
   background: #ff1493;
   border: 2px solid gold;
@@ -99,7 +99,7 @@ header img {
   padding: 5px;
 }
 
-/* === Supporting Text === */
+/* === Supporting Text === 
 .credits, .screen-container p {
   color: yellow;
   font-family: 'Comic Sans MS', cursive;
@@ -108,7 +108,7 @@ header img {
   margin: 10px 0;
 }
 
-/* === Error Messages === */
+/* === Error Messages === 
 #error, #registerError, #loginError, #configError {
   color: #ff3333;
   font-weight: bold;
@@ -117,7 +117,7 @@ header img {
   margin-top: 10px;
 }
 
-/* === Links === */
+/* === Links === 
 .site-link {
   color: cyan;
   text-decoration: underline;
@@ -128,7 +128,81 @@ header img {
   display: inline-block;
 }
 
-/* === welcome === */
+/* === welcome === 
+.menu-frame.two-column {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.character-image {
+  height: 200px;
+  margin-left: 20px;
+}
+
+.logo-img {
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.button-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #ff3c3c;
+  border: 4px solid gold;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #00000066;
+}*/
+
+/* === style.css ===
+   General layout styles for all main screens (login, register, welcome, etc.)
+*/
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url("../Images/Background.webp") repeat;
+  background-size: auto;
+  box-sizing: border-box;
+}
+
+/* Controls screen switching */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: calc(100vh - 180px);
+  text-align: center;
+}
+
+/* Container that wraps form and content */
+.screen-container {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+}
+
+/* Large title text for each screen */
+.game-title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Used in welcome screen for layout */
 .menu-frame.two-column {
   flex-direction: row;
   justify-content: center;
@@ -162,3 +236,16 @@ header img {
   box-shadow: 0 0 10px #00000066;
 }
 
+/* Footer credits and general paragraphs */
+.credits, .screen-container p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.site-link {
+  color: cyan;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-top: 10px;
+  display: inline-block;
+} 

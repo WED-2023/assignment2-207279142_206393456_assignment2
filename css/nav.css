@@ -1,4 +1,4 @@
-/* nav.css – styles for the top navigation bar */
+/* nav.css – styles for the top navigation bar 
 
 .nav-container {
     position: relative;
@@ -11,7 +11,7 @@
     font-family: 'Comic Sans MS', cursive;
   }
   
-  /* Left side – greeting and logout */
+  /* Left side – greeting and logout 
   .nav-left {
     position: absolute;
     left: 20px;
@@ -22,7 +22,7 @@
     gap: 10px;
   }
   
-  /* Center – main navigation buttons */
+  /* Center – main navigation buttons 
   .nav-center {
     position: absolute;
     left: 50%;
@@ -33,7 +33,7 @@
     align-items: center;
   }
   
-  /* All buttons inside the nav */
+  /* All buttons inside the nav 
   .nav-container button {
     background: transparent;
     color: yellow;
@@ -52,11 +52,43 @@
     transform: scale(1.05);
   }
   
-  /* Greeting message */
+  /* Greeting message 
   #userGreeting {
     font-weight: bold;
     font-size: 18px;
     color: yellow;
     text-shadow: 1px 1px red;
     font-family: 'Comic Sans MS', cursive;
-  }
+  }*/
+
+  /* === nav.css ===
+   Navigation bar styling for top screen elements
+*/
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 0 10px #00000088;
+  border: 6px solid gold;
+  background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.nav-container button {
+  margin-left: 10px;
+  padding: 5px 15px;
+  font-size: 16px;
+}

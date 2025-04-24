@@ -20,6 +20,8 @@ const hitSound = document.getElementById("hitSound");
 const hit = document.getElementById("hit");
 
 
+
+
 let canShoot = true;
 let score = 0;
 let gameStartTime = null;
@@ -85,31 +87,64 @@ document.addEventListener("keyup", e => {
 
 
 
+// document.addEventListener("DOMContentLoaded", () => {
+//   // This is the "Let's Play" button in the navbar
+//   const startGameBtn = document.querySelector('[data-screen="game"]');
+
+//   // This is the "New Game" button inside the actual game screen
+//   const newGameBtn = document.getElementById("newGameBtn");
+
+//   // When clicking "Let's Play", we prepare the config (but do NOT start the game yet)
+//   startGameBtn.addEventListener("click", () => {
+//     const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+//     if (!config) {
+//       alert("Please set your game settings first.");
+//       return;
+//     }
+  
+//     // Start a new game directly from the Let's Play button
+//     startNewGame();
+//   });
+
+//   // "New Game" actually starts a fresh game with current config
+//   if (newGameBtn) {
+//     newGameBtn.addEventListener("click", startNewGame);
+//   }
+//   // Stop music when exiting the game screen
+//   document.querySelector('#game .menu-frame button[data-screen="welcome"]')
+//   .addEventListener("click", () => {
+//     const bgm = document.getElementById("gameMusic");
+//     bgm.pause();
+//   });
+// });
+
 document.addEventListener("DOMContentLoaded", () => {
   // This is the "Let's Play" button in the navbar
   const startGameBtn = document.querySelector('[data-screen="game"]');
+  const newGameBtn   = document.getElementById("newGameBtn");
 
-  // This is the "New Game" button inside the actual game screen
-  const newGameBtn = document.getElementById("newGameBtn");
-
-  // When clicking "Let's Play", we prepare the config (but do NOT start the game yet)
   startGameBtn.addEventListener("click", () => {
     const config = JSON.parse(sessionStorage.getItem("gameConfig"));
     if (!config) {
       alert("Please set your game settings first.");
       return;
     }
-  
-    // Start a new game directly from the Let's Play button
     startNewGame();
   });
 
-  // "New Game" actually starts a fresh game with current config
   if (newGameBtn) {
     newGameBtn.addEventListener("click", startNewGame);
   }
-});
 
+  // Stop music when exiting the game screen
+  const exitBtn = document.querySelector('#game .menu-frame button[data-screen="welcome"]');
+  if (exitBtn) {
+    exitBtn.addEventListener("click", () => {
+      const bgm = document.getElementById("gameMusic");
+      if (bgm) bgm.pause();
+    });
+  }
+});
 
 //
 function shoot() {
@@ -317,6 +352,9 @@ let currentUsername = sessionStorage.getItem("username");
   if (!gameLoopRunning) {
     loop();
   }
+  const bgm = document.getElementById("gameMusic");
+  bgm.currentTime = 0;
+  bgm.play();
 }
 
 

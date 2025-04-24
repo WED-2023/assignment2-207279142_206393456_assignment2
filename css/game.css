@@ -10,6 +10,8 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+    height: 100%;
   }
   
   #game .menu-frame {
@@ -20,11 +22,9 @@
     box-shadow: 0 0 20px #000000cc;
     text-align: center;
   }
-  
-  #game button.menu-button {
-    margin-top: 20px;
-  }
-  
+
+
+
   /* Background image selection thumbnails */
   .background-options {
     display: flex;
@@ -68,4 +68,16 @@
   100% {
     opacity: 0;
   }
+}
+.menu-button {
+  background-color:  #f50057;  /* צבע רקע צהוב */
+  border: 2px solid yellow;   /* מסגרת צהובה */
+  color: white;               /* טקסט לבן */
+  font-size: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background-color: #f50057;  /* צבע רקע בהובר */
 }

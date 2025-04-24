@@ -1,5 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+// Add event listener to the new game button
+document.getElementById("newGameBtn").addEventListener("click", startNewGame);
 
 // Images
 const player = new Image();
@@ -14,6 +16,7 @@ bulletImg.src = "Images/bullet.png";
 const heartImg = new Image();
 heartImg.src = "Images/Heart.png";
 
+
 // Sounds
 const fireSound = document.getElementById("fireSound");
 const hitSound = document.getElementById("hitSound");
@@ -22,6 +25,8 @@ const hit = document.getElementById("hit");
 let canShoot = true;
 let score = 0;
 let gameStartTime = null;
+// let gameStartTime = Date.now();
+
 let gameDurationInSec = 0;
 let gameOver = false;
 
@@ -35,9 +40,14 @@ let lives = 3;
 let speedIncreaseCount = 0;
 const maxSpeedIncreases = 4;
 
+let lastFrameTime = null;
+let actualElapsedTime = 0;
+
 let showOuch = false;
 let gamePaused = false;
 let endMessage = "";
+
+
 
 // Player data
 const bubble = {
@@ -64,25 +74,64 @@ document.addEventListener("keyup", e => {
   delete keys[e.code];
 });
 
-// Load configuration
+// // Load configuration
+// document.addEventListener("DOMContentLoaded", () => {
+//   window.addEventListener("navigate", e => {
+//     if (e.detail === "game") {
+//       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+//       if (config?.background) {
+//         canvas.style.backgroundImage = `url('Images/${config.background}')`;
+//         canvas.style.backgroundSize = "cover";
+//         canvas.style.backgroundPosition = "center";
+//       }
+//       if (config?.duration) {
+//         gameDurationInSec = config.duration * 60;
+//         gameStartTime = Date.now();
+//         setTimeout(() => {
+//           if (!gameOver) endGameByTime();
+//         }, gameDurationInSec * 1000);
+//       }
+//     }
+//   });
+// });
+
+///מעודכןןןןןן
+// document.addEventListener("DOMContentLoaded", () => {
+//   window.addEventListener("navigate", e => {
+//     if (e.detail === "game") {
+//       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+
+    
+//       if (config?.duration) {
+//         gameDurationInSec = config.duration * 60;  // Set duration from configuration (in seconds)
+//         gameStartTime = Date.now();  // Start the game timer
+//         setTimeout(() => {
+//           if (!gameOver) endGameByTime();
+//         }, gameDurationInSec * 1000);
+//       }
+//     }
+//   });
+// });
 document.addEventListener("DOMContentLoaded", () => {
-  window.addEventListener("navigate", e => {
-    if (e.detail === "game") {
-      const config = JSON.parse(sessionStorage.getItem("gameConfig"));
-      if (config?.background) {
-        canvas.style.backgroundImage = `url('Images/${config.background}')`;
-        canvas.style.backgroundSize = "cover";
-        canvas.style.backgroundPosition = "center";
-      }
-      if (config?.duration) {
-        gameDurationInSec = config.duration * 60;
-        gameStartTime = Date.now();
-        setTimeout(() => {
-          if (!gameOver) endGameByTime();
-        }, gameDurationInSec * 1000);
-      }
+  // בחר את כפתור "Start Game" ו"כפתור New Game"
+  const startGameBtn = document.querySelector('[data-screen="game"]');  // כפתור Start Game
+  const newGameBtn = document.getElementById("newGameBtn"); // כפתור New Game
+
+  // הוספת מאזין ללחיצה על כפתור "Start Game"
+  startGameBtn.addEventListener("click", () => {
+    const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+    
+    // אם יש קונפיגורציה קיימת, המשך, אחרת חזור למסך ההגדרות
+    if (config) {
+      startNewGame();  // קריאה לפונקציה startNewGame
+    } else {
+      alert("Please set game configuration before starting the game.");
+      window.location.href = "#config";  // הפנה את המשתמש להגדיר קונפיגורציה
     }
   });
+
+  // הוספת מאזין לכפתור "New Game"
+  newGameBtn.addEventListener("click", startNewGame);  // כפתור חדש יתחיל משחק חדש
 });
 
 // Create 4x5 enemies
@@ -198,20 +247,86 @@ function triggerOuch() {
   setTimeout(() => {
     showOuch = false;
     gamePaused = false;
-  }, 2000);
+  }, 500);
 }
 
+// function getRemainingTime() {
+//   if (!gameStartTime || gameOver) return "00:00";
+//   const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
+//   const remain = Math.max(0, gameDurationInSec - elapsed);
+//   return `${String(Math.floor(remain / 60)).padStart(2, '0')}:${String(remain % 60).padStart(2, '0')}`;
+// }
+
 function getRemainingTime() {
-  if (!gameStartTime || gameOver) return "00:00";
-  const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
-  const remain = Math.max(0, gameDurationInSec - elapsed);
+  if (!gameStartTime || gameOver) return "00:00";  // אם המשחק נגמר או שאין זמן התחלה, החזר "00:00"
+  
+  const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);  // חישוב הזמן שעבר
+  const remain = Math.max(0, gameDurationInSec - elapsed);  // חישוב הזמן שנותר
+  
+  // החזר את הזמן שנותר בפורמט MM:SS
   return `${String(Math.floor(remain / 60)).padStart(2, '0')}:${String(remain % 60).padStart(2, '0')}`;
 }
+
+
 
 function endGameByTime() {
   endMessage = score < 100 ? `You can do better (${score})` : "Winner!";
   gameOver = true;
 }
+function startNewGame() {
+  // Reset the game state
+  score = 0;
+  lives = 3;
+  gameOver = false;
+
+  // קבל את ההגדרות מ-sessionStorage
+  const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+  if (config?.duration) {
+    gameDurationInSec = config.duration * 60;  // המרת זמן המשחק לשניות
+  } else {
+    gameDurationInSec = 4 * 60;  // ברירת מחדל (4 דקות)
+  }
+
+  gameStartTime = Date.now();  // Start the timer anew
+
+  endMessage = "";
+
+  // קבל את הרקע שנבחר מההגדרות
+  if (config?.background) {
+    canvas.style.backgroundImage = `url('Images/${config.background}')`; // השתמש ברקע שנבחר
+    canvas.style.backgroundSize = "cover";  // התאמה לגודל
+    canvas.style.backgroundPosition = "center";  // מיקום הרקע
+  }
+
+  // Reset canvas size
+  canvas.width = 500;
+  canvas.height = 600;
+
+  // Reset player position and enemies
+  bubble.x = initialPlayerPosition.x;
+  bubble.y = initialPlayerPosition.y;
+  enemies.length = 0;  // אמצי את רשימת האויבים
+  bulletBaseSpeed = 3; // הגדר מחדש את מהירות הירי
+  enemySpeed = 1;  // מהירות אויבים
+  speedIncreaseCount = 0;
+  enemyDirection = 1;
+  enemyBullets = [];
+
+  // Recreate the enemies
+  for (let r = 0; r < enemyRows; r++) {
+    for (let c = 0; c < enemyCols; c++) {
+      enemies.push({
+        x: 60 + c * 80,
+        y: 50 + r * 60,
+        row: r
+      });
+    }
+  }
+
+  // Start the game loop
+  loop();
+}
+
 
 function resetPlayerPosition() {
   bubble.x = initialPlayerPosition.x;
@@ -231,13 +346,15 @@ function draw() {
     ctx.closePath();
   });
 
+  //Draw timer & Score
   ctx.fillStyle = "yellow";
   ctx.font = "20px 'Comic Sans MS', cursive";
   ctx.textAlign = "right";
-  ctx.fillText(getRemainingTime(), canvas.width - 20, 10);
+  ctx.fillText(getRemainingTime(), canvas.width - 20, 20);
   ctx.textAlign = "left";
-  ctx.fillText("Score: " + score, 20, 10);
+  ctx.fillText("Score: " + score, 20, 20);
 
+  
   if (showOuch && !gameOver) {
     ctx.font = "60px 'Comic Sans MS', cursive";
     ctx.textAlign = "center";
@@ -259,10 +376,12 @@ function draw() {
 function loop() {
   if (!gameOver) {
     if (!gamePaused) update();
-    draw();
+    draw();  
     requestAnimationFrame(loop);
   }
 }
+
+
 loop();
 setInterval(() => {
   if (speedIncreaseCount < maxSpeedIncreases) {

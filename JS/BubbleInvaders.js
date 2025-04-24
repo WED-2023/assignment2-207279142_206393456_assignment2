@@ -1,7 +1,5 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-// Add event listener to the new game button
-document.getElementById("newGameBtn").addEventListener("click", startNewGame);
 
 // Images
 const player = new Image();
@@ -16,40 +14,42 @@ bulletImg.src = "Images/bullet.png";
 const heartImg = new Image();
 heartImg.src = "Images/Heart.png";
 
-
 // Sounds
 const fireSound = document.getElementById("fireSound");
 const hitSound = document.getElementById("hitSound");
 const hit = document.getElementById("hit");
 
+
 let canShoot = true;
 let score = 0;
 let gameStartTime = null;
-// let gameStartTime = Date.now();
-
 let gameDurationInSec = 0;
 let gameOver = false;
-
 let enemyDirection = 1;
 let enemySpeed = 1;
 let enemyBullets = [];
 let bulletBaseSpeed = 3;
 let lastEnemyShotY = canvas.height;
-
 let lives = 3;
 let speedIncreaseCount = 0;
-const maxSpeedIncreases = 4;
-
 let lastFrameTime = null;
 let actualElapsedTime = 0;
-
 let showOuch = false;
 let gamePaused = false;
 let endMessage = "";
+let speedIntervalId = null;
+let gameLoopRunning = false;
 
+const bullets = [];
+const enemies = [];
+const keys = {};
+const maxSpeedIncreases = 4;
 
+// Player's personal high scores – stored in localStorage per session
+let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+let currentUsername = sessionStorage.getItem("username") || null;
 
-// Player data
+// Size player 
 const bubble = {
   x: Math.random() * (canvas.width - 100) + 50,
   y: canvas.height - 90,
@@ -57,84 +57,9 @@ const bubble = {
   height: 80,
   speed: 10
 };
-const initialPlayerPosition = { x: bubble.x, y: bubble.y };
+//const initialPlayerPosition = { x: bubble.x, y: bubble.y };
 
-const bullets = [];
-const enemies = [];
-
-const keys = {};
-document.addEventListener("keydown", e => {
-  if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
-    e.preventDefault();
-  }
-  keys[e.code] = true;
-});
-
-document.addEventListener("keyup", e => {
-  delete keys[e.code];
-});
-
-// // Load configuration
-// document.addEventListener("DOMContentLoaded", () => {
-//   window.addEventListener("navigate", e => {
-//     if (e.detail === "game") {
-//       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
-//       if (config?.background) {
-//         canvas.style.backgroundImage = `url('Images/${config.background}')`;
-//         canvas.style.backgroundSize = "cover";
-//         canvas.style.backgroundPosition = "center";
-//       }
-//       if (config?.duration) {
-//         gameDurationInSec = config.duration * 60;
-//         gameStartTime = Date.now();
-//         setTimeout(() => {
-//           if (!gameOver) endGameByTime();
-//         }, gameDurationInSec * 1000);
-//       }
-//     }
-//   });
-// });
-
-///מעודכןןןןןן
-// document.addEventListener("DOMContentLoaded", () => {
-//   window.addEventListener("navigate", e => {
-//     if (e.detail === "game") {
-//       const config = JSON.parse(sessionStorage.getItem("gameConfig"));
-
-    
-//       if (config?.duration) {
-//         gameDurationInSec = config.duration * 60;  // Set duration from configuration (in seconds)
-//         gameStartTime = Date.now();  // Start the game timer
-//         setTimeout(() => {
-//           if (!gameOver) endGameByTime();
-//         }, gameDurationInSec * 1000);
-//       }
-//     }
-//   });
-// });
-document.addEventListener("DOMContentLoaded", () => {
-  // בחר את כפתור "Start Game" ו"כפתור New Game"
-  const startGameBtn = document.querySelector('[data-screen="game"]');  // כפתור Start Game
-  const newGameBtn = document.getElementById("newGameBtn"); // כפתור New Game
-
-  // הוספת מאזין ללחיצה על כפתור "Start Game"
-  startGameBtn.addEventListener("click", () => {
-    const config = JSON.parse(sessionStorage.getItem("gameConfig"));
-    
-    // אם יש קונפיגורציה קיימת, המשך, אחרת חזור למסך ההגדרות
-    if (config) {
-      startNewGame();  // קריאה לפונקציה startNewGame
-    } else {
-      alert("Please set game configuration before starting the game.");
-      window.location.href = "#config";  // הפנה את המשתמש להגדיר קונפיגורציה
-    }
-  });
-
-  // הוספת מאזין לכפתור "New Game"
-  newGameBtn.addEventListener("click", startNewGame);  // כפתור חדש יתחיל משחק חדש
-});
-
-// Create 4x5 enemies
+// Size Enemies
 const enemyRows = 4, enemyCols = 5;
 for (let r = 0; r < enemyRows; r++) {
   for (let c = 0; c < enemyCols; c++) {
@@ -146,6 +71,47 @@ for (let r = 0; r < enemyRows; r++) {
   }
 }
 
+
+document.addEventListener("keydown", e => {
+  if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+    e.preventDefault();
+  }
+  keys[e.code] = true;
+});
+
+document.addEventListener("keyup", e => {
+  delete keys[e.code];
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  // This is the "Let's Play" button in the navbar
+  const startGameBtn = document.querySelector('[data-screen="game"]');
+
+  // This is the "New Game" button inside the actual game screen
+  const newGameBtn = document.getElementById("newGameBtn");
+
+  // When clicking "Let's Play", we prepare the config (but do NOT start the game yet)
+  startGameBtn.addEventListener("click", () => {
+    const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+    if (!config) {
+      alert("Please set your game settings first.");
+      return;
+    }
+  
+    // Start a new game directly from the Let's Play button
+    startNewGame();
+  });
+
+  // "New Game" actually starts a fresh game with current config
+  if (newGameBtn) {
+    newGameBtn.addEventListener("click", startNewGame);
+  }
+});
+
+
+//
 function shoot() {
   if (canShoot) {
     bullets.push({ x: bubble.x, y: bubble.y - 20, speed: 5 });
@@ -197,6 +163,9 @@ function update() {
   if (enemies.length === 0 && !gameOver) {
     gameOver = true;
     endMessage = "Champion!";
+    if (currentUsername && score > 0) {
+      saveScore(currentUsername, score);
+    }
   }
 }
 
@@ -229,6 +198,9 @@ function checkEnemyBulletHitsPlayer() {
       if (lives <= 0) {
         gameOver = true;
         endMessage = "You Lost!";
+        if (currentUsername && score > 0) {
+          saveScore(currentUsername, score);
+        }
       }
       break;
     }
@@ -250,69 +222,76 @@ function triggerOuch() {
   }, 500);
 }
 
-// function getRemainingTime() {
-//   if (!gameStartTime || gameOver) return "00:00";
-//   const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
-//   const remain = Math.max(0, gameDurationInSec - elapsed);
-//   return `${String(Math.floor(remain / 60)).padStart(2, '0')}:${String(remain % 60).padStart(2, '0')}`;
-// }
-
+// countdown timer - colled from drow
 function getRemainingTime() {
-  if (!gameStartTime || gameOver) return "00:00";  // אם המשחק נגמר או שאין זמן התחלה, החזר "00:00"
+  if (!gameStartTime || gameOver) return "00:00"; 
+  const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);  
+  const remain = Math.max(0, gameDurationInSec - elapsed);
   
-  const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);  // חישוב הזמן שעבר
-  const remain = Math.max(0, gameDurationInSec - elapsed);  // חישוב הזמן שנותר
-  
-  // החזר את הזמן שנותר בפורמט MM:SS
   return `${String(Math.floor(remain / 60)).padStart(2, '0')}:${String(remain % 60).padStart(2, '0')}`;
 }
 
+let initialPlayerPosition = { x: 0, y: 0 };
 
-
-function endGameByTime() {
-  endMessage = score < 100 ? `You can do better (${score})` : "Winner!";
-  gameOver = true;
-}
 function startNewGame() {
-  // Reset the game state
+  // Reset game state
   score = 0;
   lives = 3;
   gameOver = false;
 
-  // קבל את ההגדרות מ-sessionStorage
-  const config = JSON.parse(sessionStorage.getItem("gameConfig"));
-  if (config?.duration) {
-    gameDurationInSec = config.duration * 60;  // המרת זמן המשחק לשניות
-  } else {
-    gameDurationInSec = 4 * 60;  // ברירת מחדל (4 דקות)
+  bubble.x = Math.random() * (canvas.width - 100) + 50;
+  bubble.y = canvas.height - 90;
+
+  // Save this starting position for resets
+  initialPlayerPosition = { x: bubble.x, y: bubble.y };
+
+  // Clear previous speed interval (in case one exists)
+  if (speedIntervalId !== null) {
+    clearInterval(speedIntervalId);
+    speedIntervalId = null;
   }
 
-  gameStartTime = Date.now();  // Start the timer anew
+  // Reset speed variables
+  enemySpeed = 1;
+  bulletBaseSpeed = 3;
+  speedIncreaseCount = 0;
+
+  // Get game configuration
+  const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+  gameDurationInSec = config?.duration ? config.duration * 60 : 4 * 60;
+  gameStartTime = Date.now();
+  
+    // Ask for username if not stored yet
+  if (!currentUsername) {
+    currentUsername = prompt("Enter your name:");
+    sessionStorage.setItem("username", currentUsername);
+    localStorage.removeItem("highScores"); // reset scores if new player
+    highScores = [];
+  }
 
   endMessage = "";
 
-  // קבל את הרקע שנבחר מההגדרות
+  // Apply background
   if (config?.background) {
-    canvas.style.backgroundImage = `url('Images/${config.background}')`; // השתמש ברקע שנבחר
-    canvas.style.backgroundSize = "cover";  // התאמה לגודל
-    canvas.style.backgroundPosition = "center";  // מיקום הרקע
+    canvas.style.backgroundImage = `url('Images/${config.background}')`;
+    canvas.style.backgroundSize = "cover";
+    canvas.style.backgroundPosition = "center";
   }
 
-  // Reset canvas size
-  canvas.width = 500;
+  // Canvas size
+  canvas.width = 700;
   canvas.height = 600;
 
-  // Reset player position and enemies
-  bubble.x = initialPlayerPosition.x;
-  bubble.y = initialPlayerPosition.y;
-  enemies.length = 0;  // אמצי את רשימת האויבים
-  bulletBaseSpeed = 3; // הגדר מחדש את מהירות הירי
-  enemySpeed = 1;  // מהירות אויבים
-  speedIncreaseCount = 0;
+  // Reset player & enemies
+  //bubble.x = initialPlayerPosition.x;
+  //bubble.y = initialPlayerPosition.y;
+  enemies.length = 0;
+  bulletBaseSpeed = 3;
+  enemySpeed = 1;
   enemyDirection = 1;
   enemyBullets = [];
 
-  // Recreate the enemies
+  const enemyRows = 4, enemyCols = 5;
   for (let r = 0; r < enemyRows; r++) {
     for (let c = 0; c < enemyCols; c++) {
       enemies.push({
@@ -323,12 +302,27 @@ function startNewGame() {
     }
   }
 
-  // Start the game loop
-  loop();
+  // Start speed acceleration every 5 seconds (up to 4 times)
+  speedIntervalId = setInterval(() => {
+    if (speedIncreaseCount < maxSpeedIncreases) {
+      enemySpeed += 0.5;
+      bulletBaseSpeed += 0.5;
+      speedIncreaseCount++;
+    } else {
+      clearInterval(speedIntervalId); // stop when reached max
+    }
+  }, 5000);
+
+  if (!gameLoopRunning) {
+    loop();
+  }
 }
 
 
 function resetPlayerPosition() {
+  // bubble.x = initialPlayerPosition.x;
+  // bubble.y = initialPlayerPosition.y;
+
   bubble.x = initialPlayerPosition.x;
   bubble.y = initialPlayerPosition.y;
 }
@@ -372,21 +366,43 @@ function draw() {
     ctx.fillText(endMessage, canvas.width / 2, canvas.height / 2);
   }
 }
-
-function loop() {
-  if (!gameOver) {
-    if (!gamePaused) update();
-    draw();  
-    requestAnimationFrame(loop);
-  }
+// Save score to localStorage
+function saveScore(username, score) {
+  const player = { username, score };
+  highScores.push(player);
+  highScores.sort((a, b) => b.score - a.score); // Highest first
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  updateHighScoreTable();
 }
 
+// Render high scores in HTML table
+function updateHighScoreTable() {
+  const table = document.getElementById("highScoreTable");
+  if (!table) return;
 
-loop();
-setInterval(() => {
-  if (speedIncreaseCount < maxSpeedIncreases) {
-    enemySpeed += 0.5;
-    bulletBaseSpeed += 0.5;
-    speedIncreaseCount++;
+  table.innerHTML = ""; // Clear previous
+  highScores.forEach((score, index) => {
+    const row = table.insertRow();
+    row.insertCell(0).textContent = index + 1;
+    row.insertCell(1).textContent = score.username;
+    row.insertCell(2).textContent = score.score;
+  });
+}
+function loop() {
+  if (gameOver) {
+    gameLoopRunning = false;
+    return;
   }
-}, 5000);
+
+  if (!gameLoopRunning) {
+    gameLoopRunning = true;
+  }
+
+  if (!gamePaused) {
+    update();
+  }
+
+  draw();
+  requestAnimationFrame(loop);
+}
+

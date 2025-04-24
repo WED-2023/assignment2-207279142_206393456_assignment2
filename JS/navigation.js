@@ -7,19 +7,27 @@
       button.addEventListener('click', () => {
         const targetId = button.getAttribute('data-screen');
         const targetScreen = document.getElementById(targetId);
-  
+    
+        const user = JSON.parse(sessionStorage.getItem("currentUser"));
+    
         if (targetScreen.classList.contains("protected")) {
-          const user = JSON.parse(sessionStorage.getItem("currentUser"));
           if (!user) {
             alert("You must be logged in to access this screen.");
             showScreen("login");
             return;
           }
+          // Check if the user is logged in and if the target screen is "game"
+          if (targetId === "game") {
+            const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+            if (!config) {
+              alert("Please set your game settings first.");
+              return;
+            }
+          }
         }
-  
+    
         showScreen(targetId);
         updateUIForUser();
-
       });
     });
   

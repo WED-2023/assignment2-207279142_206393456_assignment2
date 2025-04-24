@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         greeting.textContent = `Hello, ${user.username}!`;
       }
 
-      // Navigate to config screen
-      const event = new CustomEvent("navigate", { detail: "config" });
+      // Navigate to welcome screen
+      const event = new CustomEvent("navigate", { detail: "welcome" });
       window.dispatchEvent(event);
       return;
     }
@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
       greeting.textContent = `Hello, ${user.firstName || user.username}!`;
     }
 
-    // Navigate to config screen
-    const event = new CustomEvent("navigate", { detail: "config" });
+    // Navigate to welcome screen
+    const event = new CustomEvent("navigate", { detail: "welcome" });
     window.dispatchEvent(event);
   });
 });

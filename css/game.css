@@ -81,3 +81,22 @@
 .menu-button:hover {
   background-color: #f50057;  /* צבע רקע בהובר */
 }
+
+
+#highScoreTable {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+#highScoreTable th,
+#highScoreTable td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#highScoreTable th {
+  background-color: #333;
+  color: white;
+}

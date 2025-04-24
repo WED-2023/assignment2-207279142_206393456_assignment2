@@ -327,12 +327,20 @@ function resetPlayerPosition() {
   bubble.x = initialPlayerPosition.x;
   bubble.y = initialPlayerPosition.y;
 }
-
 function draw() {
+  // Clear the canvas for the new frame
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw the player
   ctx.drawImage(player, bubble.x - bubble.width / 2, bubble.y, bubble.width, bubble.height);
+
+  // Draw bullets
   bullets.forEach(b => ctx.drawImage(bulletImg, b.x - 8, b.y, 16, 32));
+
+  // Draw enemies
   enemies.forEach(e => ctx.drawImage(enemyImg, e.x - 50, e.y - 50, 100, 100));
+
+  // Draw enemy bullets
   enemyBullets.forEach(b => {
     ctx.beginPath();
     ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
@@ -341,15 +349,16 @@ function draw() {
     ctx.closePath();
   });
 
-  //Draw timer & Score
+  // Draw remaining time and current score
   ctx.fillStyle = "yellow";
   ctx.font = "20px 'Comic Sans MS', cursive";
   ctx.textAlign = "right";
   ctx.fillText(getRemainingTime(), canvas.width - 20, 20);
+
   ctx.textAlign = "left";
   ctx.fillText("Score: " + score, 20, 20);
 
-  
+  // Show "Ouch!" animation when player is hit
   if (showOuch && !gameOver) {
     ctx.font = "60px 'Comic Sans MS', cursive";
     ctx.textAlign = "center";
@@ -359,14 +368,17 @@ function draw() {
     ctx.fillText("Ouch!", canvas.width / 2, canvas.height / 2);
   }
 
+  // Show final game message if game is over (e.g., Champion!, You Lost!, etc.)
   if (gameOver) {
     ctx.font = "40px 'Comic Sans MS', cursive";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 3;
+    ctx.textAlign = "center";
     ctx.strokeText(endMessage, canvas.width / 2, canvas.height / 2);
     ctx.fillText(endMessage, canvas.width / 2, canvas.height / 2);
   }
 }
+
 // Save score to localStorage
 function saveScore(score) {
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -428,23 +440,56 @@ function showHighScores() {
 
 
 function endGame(score) {
-  saveScore(score); 
-  showHighScores(); 
+  saveScore(score);
+  
+  setTimeout(() => {
+    showHighScores();
+  }, 3000); 
 }
+
 function loop() {
+  // If game is already over, stop the loop
   if (gameOver) {
     gameLoopRunning = false;
     return;
   }
 
+  // Start the loop if not running yet
   if (!gameLoopRunning) {
     gameLoopRunning = true;
   }
 
+  // Update game state only if not paused
   if (!gamePaused) {
     update();
   }
 
+  // Check if time is up
+  const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
+  if (!gameOver && elapsed >= gameDurationInSec) {
+    gameOver = true;
+
+    // Choose appropriate end message based on the score
+    if (score < 100) {
+      endMessage = `You can do better ${score}`;
+    } else if (score < 250) {
+      endMessage = "Winner!";
+    } else {
+      endMessage = "Champion!";
+    }
+
+    gameLoopRunning = false;  // Explicitly stop loop
+    draw(); // Display the final message before showing the high score table
+
+    // Delay high score modal by 3 seconds to let the message be visible
+    setTimeout(() => {
+      endGame(score);
+    }, 3000);
+
+    return;
+  }
+
+  // Render the current game frame
   draw();
   requestAnimationFrame(loop);
 }

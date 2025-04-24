@@ -13,17 +13,12 @@
     width: 100%;
     height: 100%;
   }
+  .canvas-wrapper {
+    position: relative; /* מאפשר הצבה אבסולוטית יחסית לקנבס */
+    width: 700px;
+    margin: 0 auto; /* מרכז את הקנבס */
+}  
   
-  #game .menu-frame {
-    background-color: rgba(0, 0, 0, 0.6);
-    border: 6px solid gold;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #000000cc;
-    text-align: center;
-  }
-
-
 
   /* Background image selection thumbnails */
   .background-options {
@@ -47,13 +42,26 @@
     border-color: gold;
     box-shadow: 0 0 10px gold;
   }
+
+  .menu-frame {
+    position: relative; /* כדי שנוכל למקם לבבות יחסית אליה */
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 6px solid gold;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #000000cc;
+    text-align: center;
+  }
+
+
+  /* Hearts container */
   #lifeContainer {
     position: absolute;
-    top: 100px;    
-    right: 40px;    
+    top: -50px; /* מרחיק אותו מהקנבס */
+    right: 10px;
     display: flex;
     gap: 10px;
-    z-index: 999;
+    z-index: 10;
   }
   
   .life-heart {
@@ -70,16 +78,16 @@
   }
 }
 .menu-button {
-  background-color:  #f50057;  /* צבע רקע צהוב */
-  border: 2px solid yellow;   /* מסגרת צהובה */
-  color: white;               /* טקסט לבן */
+  background-color:  #f50057;  
+  border: 2px solid yellow;   
+  color: white;              
   font-size: 20px;
   padding: 10px 20px;
   cursor: pointer;
 }
 
 .menu-button:hover {
-  background-color: #f50057;  /* צבע רקע בהובר */
+  background-color: #f50057; 
 }
 
 

@@ -149,23 +149,28 @@
 </div>
 
   <!-- Game -->
+<!-- Game -->
   <div id="game" class="screen protected">
     <div class="screen-container">
-      <div id="lifeContainer">
-        <img src="Images/Heart.png" class="life-heart" />
-        <img src="Images/Heart.png" class="life-heart" />
-        <img src="Images/Heart.png" class="life-heart" />
-      </div>
       <div class="menu-frame">
+        <!-- Life hearts - outside the canvas but inside the frame -->
+        <div id="lifeContainer">
+          <img src="Images/Heart.png" class="life-heart" />
+          <img src="Images/Heart.png" class="life-heart" />
+          <img src="Images/Heart.png" class="life-heart" />
+        </div>
+
         <canvas id="gameCanvas" width="700" height="600"></canvas>
+
         <audio id="fireSound" src="Audios/shut.mp3"></audio>
         <audio id="hitSound" src="Audios/pop.mp3"></audio>
         <audio id="hit" src="Audios/hit.mp3"></audio>
+
         <button class="menu-button" id="newGameBtn">New Game</button>
         <button class="menu-button" data-screen="welcome">← Exit Game</button>
-
       </div>
     </div>
+
     <!-- High Scores Modal -->
     <div id="highScoresModal" class="modal">
       <div class="modal-content">
@@ -184,7 +189,6 @@
         </table>
       </div>
     </div>
-
   </div>
 
   </main>

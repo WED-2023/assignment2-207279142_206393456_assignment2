@@ -1,15 +1,14 @@
 /* === common.css ===
-   This file will contain all shared styles: backgrounds, borders, fonts, layout.
-*/
+   This file contains all shared styles: backgrounds, borders, fonts, layout. */
 
-/* Shared fonts, text, and theme colors */
-:root {
+   :root {
     --main-font: 'Comic Sans MS', cursive;
     --main-bg: linear-gradient(to bottom, #ff3c3c, #ff1493);
     --main-border: 6px solid gold;
     --main-text-color: yellow;
     --main-shadow: 0 0 10px #00000088;
     --main-text-shadow: 1px 1px red;
+    --button-font-size: 28px;
   }
   
   body, header, footer, .menu-frame, .modal-content {
@@ -38,6 +37,7 @@
     color: var(--main-text-color);
     font-family: var(--main-font);
     font-weight: bold;
+    font-size: var(--button-font-size);
     text-shadow: 1px 1px #000;
     transition: transform 0.2s;
     cursor: pointer;
@@ -48,14 +48,12 @@
     transform: scale(1.05);
   }
   
-  /* Common form input style */
   input, select {
     font-size: 18px;
     padding: 5px;
     font-family: var(--main-font);
   }
   
-  /* Error text */
   #error, #registerError, #loginError, #configError {
     color: #ff3333;
     font-weight: bold;
@@ -67,7 +65,6 @@
     word-wrap: break-word;
   }
   
-  /* Utility */
   .text-center {
     text-align: center;
   }
@@ -77,4 +74,3 @@
     justify-content: center;
     align-items: center;
   }
-  

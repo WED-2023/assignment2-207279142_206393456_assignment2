@@ -54,7 +54,7 @@ const enemyColors = [
 ];
 
 // Player's personal high scores – stored in localStorage per session
-let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+let highScores = JSON.parse(localStorage.getItem("highScore")) || [];
 let currentUsername = sessionStorage.getItem("username") || null;
 
 // Size player 
@@ -403,7 +403,6 @@ function draw() {
   ctx.font = "20px 'Comic Sans MS', cursive";
   ctx.textAlign = "right";
   ctx.fillText(getRemainingTime(), canvas.width - 20, 20);
-
   ctx.textAlign = "left";
   ctx.fillText("Score: " + score, 20, 20);
 
@@ -417,7 +416,7 @@ function draw() {
     ctx.fillText("Ouch!", canvas.width / 2, canvas.height / 2);
   }
 
-  // Show final game message if game is over (e.g., Champion!, You Lost!, etc.)
+  // Show final game message if game is over (Champion!, You Lost!, etc.)
   if (gameOver) {
     ctx.font = "40px 'Comic Sans MS', cursive";
     ctx.strokeStyle = "black";

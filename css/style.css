@@ -1,167 +1,3 @@
-/* === General Body Styles === 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: url("../Images/Background.webp") repeat;
-  background-size: auto;
-  box-sizing: border-box;
-}
-
-/* === Header and Footer === 
-header, footer {
-  background: linear-gradient(to bottom, #ff3c3c, #ff1493);
-  border: 6px solid gold;
-  color: yellow;
-  font-family: 'Comic Sans MS', cursive;
-  text-align: center;
-  padding: 10px;
-  box-shadow: 0 0 10px #00000088;
-  text-shadow: 1px 1px red;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-header img {
-  height: 50px;
-}
-
-/* === Main Screens === 
-.screen {
-  display: none;
-}
-
-.screen.active {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: calc(100vh - 180px);
-  text-align: center;
-}
-
-/* === Shared Screen Container === 
-.screen-container {
-  max-width: 600px;
-  margin: auto;
-}
-
-/* === Screen Titles === 
-.game-title {
-  color: yellow;
-  font-size: 36px;
-  margin-bottom: 20px;
-  font-family: 'Comic Sans MS', cursive;
-  text-shadow: 2px 2px red;
-}
-
-/* === Menu Frame Box === */
-.menu-frame {
-  border: 8px solid gold;
-  padding: 30px 20px;
-  background: linear-gradient(to bottom, #ff3c3c, #ff1493);
-  border-radius: 15px;
-  box-shadow: 0 0 20px #00000088;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* === Buttons Inside Screens === 
-.menu-button {
-  background: #ff1493;
-  border: 2px solid gold;
-  border-radius: 10px;
-  padding: 12px 20px;
-  color: yellow;
-  font-weight: bold;
-  font-family: 'Comic Sans MS', cursive;
-  font-size: 20px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  text-shadow: 2px 2px #000;
-}
-
-.menu-button:hover {
-  transform: scale(1.05);
-  background-color: #ff3399;
-}
-
-#registerForm input,
-#loginForm input,
-#registerForm select,
-#loginForm select,
-#configForm input,
-#configForm select {
-  font-size: 18px;
-  padding: 5px;
-}
-
-/* === Supporting Text === 
-.credits, .screen-container p {
-  color: yellow;
-  font-family: 'Comic Sans MS', cursive;
-  font-size: 18px;
-  text-shadow: 1px 1px red;
-  margin: 10px 0;
-}
-
-/* === Error Messages === 
-#error, #registerError, #loginError, #configError {
-  color: #ff3333;
-  font-weight: bold;
-  font-size: 20px;
-  text-shadow: 1px 1px #000;
-  margin-top: 10px;
-}
-
-/* === Links === 
-.site-link {
-  color: cyan;
-  text-decoration: underline;
-  font-size: 14px;
-  font-family: 'Comic Sans MS', cursive;
-  text-shadow: 1px 1px #000;
-  margin-top: 10px;
-  display: inline-block;
-}
-
-/* === welcome === 
-.menu-frame.two-column {
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.character-image {
-  height: 200px;
-  margin-left: 20px;
-}
-
-.logo-img {
-  height: 150px;
-  margin-bottom: 10px;
-}
-
-.button-box {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  background: #ff3c3c;
-  border: 4px solid gold;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 10px #00000066;
-}*/
-
 /* === style.css ===
    General layout styles for all main screens (login, register, welcome, etc.)
 */
@@ -202,36 +38,57 @@ body {
   text-align: center;
 }
 
-/* Used in welcome screen for layout */
 .menu-frame.two-column {
+  display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  gap: 50px;
+  max-width: 700px;
+  margin: auto;
+  min-height: 250px;
+
 }
 
+/* Align button box to the left */
+.button-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start; 
+  justify-content: center;
+}
+
+
+/* Layout for vertically stacked buttons */
 .menu-buttons {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+/* Character image on welcome screen */
 .character-image {
   height: 200px;
-  margin-left: 20px;
+  width: auto;
+  display: block;
 }
 
+/* Logo image above titles */
 .logo-img {
   height: 150px;
   margin-bottom: 10px;
 }
 
+/* Box that wraps the main buttons on welcome screen */
 .button-box {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  align-items: center;
   background: #ff3c3c;
   border: 4px solid gold;
-  padding: 20px;
+  padding: 20px 40px; 
   border-radius: 15px;
   box-shadow: 0 0 10px #00000066;
 }
@@ -242,10 +99,35 @@ body {
   margin: 10px 0;
 }
 
+/* Link styling */
 .site-link {
   color: cyan;
   text-decoration: underline;
   font-size: 14px;
   margin-top: 10px;
   display: inline-block;
-} 
+}
+
+/* Layout of background selection thumbnails */
+.background-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.background-options img {
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.background-options input[type="radio"]:checked + img {
+  border-color: gold;
+  box-shadow: 0 0 10px gold;
+}

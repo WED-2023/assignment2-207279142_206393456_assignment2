@@ -61,12 +61,23 @@ body {
 
 
 /* Layout for vertically stacked buttons */
-.menu-buttons {
+/* .menu-buttons {
   display: flex;
   flex-direction: column;
   gap: 15px;
+} */
+.menu-button {
+  background-color: #f50057;
+  border: 2px solid yellow;
+  color: white;
+  font-size: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
+.menu-button:hover {
+  background-color: #f50057;
+}
 /* Character image on welcome screen */
 .character-image {
   height: 200px;

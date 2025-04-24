@@ -71,19 +71,13 @@
   #highScoresTable th,
   #highScoresTable td {
     padding: 12px 20px;
-    border: 1px solid #ddd;
+    border:hidden;
     text-align: center;
     vertical-align: middle;
-    background-color: #ff1493;
+    /* background-color: #ff1493; */
     color: yellow;
   }
   
   #highScoresTable tbody tr {
     height: 40px;
   }
-  
-  #highScoresTable tbody tr:hover {
-    background-color: #ff69b4;
-    cursor: default;
-  }
-  

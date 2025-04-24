@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     sessionStorage.setItem("currentUser", JSON.stringify(user));
+    //sessionStorage.setItem("username", username);
 
     // Update UI for logged-in state
     if (typeof updateUIForUser === "function") updateUIForUser();

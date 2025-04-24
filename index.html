@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/password.css" /> 
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/highscores.css" />
 
 
 </head>
@@ -105,7 +106,7 @@
         <button type="submit" class="menu-button">Login</button>
         <button class="menu-button" data-screen="welcome" type="button">← Back</button>
       </form>
-      <p id="loginError" class="credits""></p>
+      <p id="loginError" class="credits"></p>
     </div>
   </div>
 
@@ -165,19 +166,25 @@
 
       </div>
     </div>
-    <h2>🏆 High Scores</h2>
-    <table id="highScoreTable" border="1">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Player</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Filled by JavaScriffpt -->
-      </tbody>
-    </table>
+    <!-- High Scores Modal -->
+    <div id="highScoresModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close">X</button>
+        <h2 id="playerNameHighScore"></h2>
+        <table id="highScoresTable">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JavaScript will fill this table dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   </main>

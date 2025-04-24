@@ -163,6 +163,7 @@ function update() {
   if (enemies.length === 0 && !gameOver) {
     gameOver = true;
     endMessage = "Champion!";
+    endGame(score);
     if (currentUsername && score > 0) {
       saveScore(currentUsername, score);
     }
@@ -198,6 +199,7 @@ function checkEnemyBulletHitsPlayer() {
       if (lives <= 0) {
         gameOver = true;
         endMessage = "You Lost!";
+        endGame(score);
         if (currentUsername && score > 0) {
           saveScore(currentUsername, score);
         }
@@ -234,6 +236,13 @@ function getRemainingTime() {
 let initialPlayerPosition = { x: 0, y: 0 };
 
 function startNewGame() {
+
+let currentUsername = sessionStorage.getItem("username");
+// if (!currentUsername) {
+//   alert("Please login first.");
+//   window.location.href = "login.html"; 
+// }
+
   // Reset game state
   score = 0;
   lives = 3;
@@ -260,14 +269,6 @@ function startNewGame() {
   const config = JSON.parse(sessionStorage.getItem("gameConfig"));
   gameDurationInSec = config?.duration ? config.duration * 60 : 4 * 60;
   gameStartTime = Date.now();
-  
-    // Ask for username if not stored yet
-  if (!currentUsername) {
-    currentUsername = prompt("Enter your name:");
-    sessionStorage.setItem("username", currentUsername);
-    localStorage.removeItem("highScores"); // reset scores if new player
-    highScores = [];
-  }
 
   endMessage = "";
 
@@ -387,6 +388,41 @@ function updateHighScoreTable() {
     row.insertCell(1).textContent = score.username;
     row.insertCell(2).textContent = score.score;
   });
+}
+function showHighScores() {
+  const modal = document.getElementById("highScoresModal");
+  const playerName = sessionStorage.getItem("username");
+  const playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+  // Clear the previous table entries
+  const tableBody = document.getElementById("highScoresTable").getElementsByTagName('tbody')[0];
+  tableBody.innerHTML = ''; // Remove previous rows to avoid duplicates
+
+  const playerNameElement = document.getElementById("playerNameHighScore");
+  playerNameElement.textContent = `${playerName}'s High Scores`;
+
+  playerScores
+    .filter(score => score.username === playerName)
+    .sort((a, b) => b.score - a.score)
+    .forEach((score, index) => {
+      const row = tableBody.insertRow();
+      const rankCell = row.insertCell(0);
+      const scoreCell = row.insertCell(1);
+      rankCell.textContent = index + 1;
+      scoreCell.textContent = score.score;
+    });
+
+  modal.style.display = "flex";
+  // Close the modal when the X is clicked
+  document.querySelector(".modal-close").addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+}
+
+
+function endGame(score) {
+  saveScore(currentUsername, score); 
+  showHighScores(); 
 }
 function loop() {
   if (gameOver) {

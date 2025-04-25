@@ -1,6 +1,9 @@
 # Bubble Invaders 
 
 A game built with **HTML5, CSS3 and Vanilla JavaScript** as part of the WED course final assignment.
+You can try the game directly in your browser without downloading anything:
+
+ [Click here to play Bubble Invaders](https://wed-2023.github.io/assignment2-207279142_206393456_assignment2/)
 
 --- 
 
@@ -14,14 +17,6 @@ Bubble Invaders is a fast-paced game where the player controls a character at th
 - **Ron Shukrun** — 207279142
 
 🎓 Submitted as part of [WED 2023 @ BGU](https://github.com/WED-2023)
-
----
-
-##  Play Online
-
-You can try the game directly in your browser without downloading anything:
-
- [Click here to play Bubble Invaders](https://wed-2023.github.io/assignment2-207279142_206393456_assignment2/)
 
 ---
 
@@ -71,5 +66,4 @@ You can try the game directly in your browser without downloading anything:
 
 ##  Contact
 
-- 📧 maorme@bgu.ac.il
-- 📧 ronsh@bgu.ac.il
+-  maorme@bgu.ac.il | ronsh@bgu.ac.il

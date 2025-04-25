@@ -16,8 +16,6 @@ Bubble Invaders is a fast-paced game where the player controls a character at th
 - **Maor Nezer** — 206393456  
 - **Ron Shukrun** — 207279142
 
-🎓 Submitted as part of [WED 2023 @ BGU](https://github.com/WED-2023)
-
 ---
 
 ##  Features

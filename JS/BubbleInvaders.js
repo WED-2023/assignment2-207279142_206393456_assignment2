@@ -527,7 +527,7 @@ function loop() {
 
     return;
   }
-
+  
   // Render the current game frame
   draw();
   requestAnimationFrame(loop);

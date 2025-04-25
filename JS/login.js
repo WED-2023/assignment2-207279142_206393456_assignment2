@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (greeting) {
       greeting.textContent = `Hello, ${user.firstName || user.username}!`;
     }
-
     // Navigate to welcome screen
     const event = new CustomEvent("navigate", { detail: "welcome" });
     window.dispatchEvent(event);

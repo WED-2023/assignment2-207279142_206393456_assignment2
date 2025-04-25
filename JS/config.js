@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
       errorEl.textContent = "Please complete all fields, set duration (min 2) and choose a valid key (a-z or space).";
       return;
     }
-
     const user = sessionStorage.getItem("currentUser");
     if (!user) {
       alert("Please log in before saving game settings.");

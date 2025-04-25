@@ -146,5 +146,4 @@
       if (buttonBox) buttonBox.style.display = loggedIn ? "none" : "block";
     }
     window.updateUIForUser = updateUIForUser;
-
   });

@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let users = JSON.parse(sessionStorage.getItem("users")) || [];
       users.push(user);
       sessionStorage.setItem("users", JSON.stringify(users));
-  
       document.querySelector('button[data-screen="login"]').click();
     });
     // Handle password visibility toggle

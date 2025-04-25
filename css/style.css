@@ -8,25 +8,44 @@ body {
   box-sizing: border-box;
 }
 
-/* === Header and Footer === */
-header, footer {
+/* === Header === */
+header {
+  background: linear-gradient(to bottom, #ff3c3c, #ff1493);
+  border: 6px solid gold;
+  color: yellow;
+  font-family: 'Comic Sans MS', cursive;
+  text-shadow: 1px 1px red;
+  box-shadow: 0 0 10px #00000088;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 10px 30px;
+}
+
+/* === Footer === */
+footer {
   background: linear-gradient(to bottom, #ff3c3c, #ff1493);
   border: 6px solid gold;
   color: yellow;
   font-family: 'Comic Sans MS', cursive;
   text-align: center;
   padding: 10px;
-  box-shadow: 0 0 10px #00000088;
   text-shadow: 1px 1px red;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 
-header img {
-  height: 50px;
+.logo-img {
+  width: 90px;
+  height: auto;
+  margin-left: 0;
+  margin-right: 20px;
 }
+
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
 
 /* === Main Screens === */
 .screen {
@@ -63,7 +82,6 @@ header img {
   padding: 30px 20px;
   background: linear-gradient(to bottom, #ff3c3c, #ff1493);
   border-radius: 15px;
-  box-shadow: 0 0 20px #00000088;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -146,11 +164,6 @@ header img {
   margin-left: 20px;
 }
 
-.logo-img {
-  height: 150px;
-  margin-bottom: 10px;
-}
-
 .button-box {
   display: flex;
   flex-direction: column;
@@ -159,5 +172,4 @@ header img {
   border: 4px solid gold;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 0 10px #00000066;
 }

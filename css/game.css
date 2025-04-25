@@ -75,20 +75,6 @@
     opacity: 0;
   }
 }
-/*
-.menu-button {
-  background-color:  #f50057;  
-  border: 2px solid yellow;   
-  color: white;              
-  font-size: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.menu-button:hover {
-  background-color: #f50057; 
-}*/
-
 
 #highScoreTable {
   width: 100%;

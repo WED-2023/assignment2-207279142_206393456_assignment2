@@ -5,9 +5,6 @@ const ctx = canvas.getContext("2d");
 const player = new Image();
 player.src = "Images//player_front.png";
 
-// const enemyImg = new Image();
-// enemyImg.src = "Images/BubbleB.png";
-
 const bulletImg = new Image();
 bulletImg.src = "Images/bullet.png";
 
@@ -186,17 +183,6 @@ function update() {
   }
 }
 
-// function handleEnemyShooting() {
-//   if (enemyBullets.length === 0 || enemyBullets[enemyBullets.length - 1].y > canvas.height * 0.75) {
-//     const enemy = enemies[Math.floor(Math.random() * enemies.length)];
-//     if (enemy) enemyBullets.push({ x: enemy.x, y: enemy.y + 20, speed: bulletBaseSpeed });
-//   }
-
-//   enemyBullets.forEach(b => b.y += b.speed);
-//   for (let i = enemyBullets.length - 1; i >= 0; i--) {
-//     if (enemyBullets[i].y > canvas.height) enemyBullets.splice(i, 1);
-//   }
-// }
 function handleEnemyShooting() {
   if (
     enemyBullets.length === 0 ||
@@ -275,11 +261,6 @@ let initialPlayerPosition = { x: 0, y: 0 };
 function startNewGame() {
 
 let currentUsername = sessionStorage.getItem("username");
-// if (!currentUsername) {
-//   alert("Please login first.");
-//   window.location.href = "login.html"; 
-// }
-
   // Reset game state
   score = 0;
   lives = 3;
@@ -362,9 +343,6 @@ let currentUsername = sessionStorage.getItem("username");
 
 
 function resetPlayerPosition() {
-  // bubble.x = initialPlayerPosition.x;
-  // bubble.y = initialPlayerPosition.y;
-
   bubble.x = initialPlayerPosition.x;
   bubble.y = initialPlayerPosition.y;
 }
@@ -398,7 +376,7 @@ function draw() {
   enemyBullets.forEach(b => {
     ctx.beginPath();
     ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
-    ctx.fillStyle = b.color || "red";  // אם משהו משתבש, נופשים לאדום
+    ctx.fillStyle = b.color || "red";
     ctx.fill();
     ctx.closePath();
   });

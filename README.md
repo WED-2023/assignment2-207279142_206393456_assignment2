@@ -2,10 +2,12 @@
 
 A game built with **HTML5, CSS3 and Vanilla JavaScript** as part of the WED course final assignment.
 
-##  Game Summary
+--- 
+
+## Game Summary
 
 Bubble Invaders is a fast-paced game where the player controls a character at the bottom of the screen and must destroy waves of invading bubbles. The game features bubble attacks, configurable controls, scoring system, lives, sound effects, and a personal high-score system per session.
----
+
 ##  Authors
 
 - **Maor Nezer** — 206393456  
@@ -26,28 +28,17 @@ You can try the game directly in your browser without downloading anything:
 ##  Features
 
 -  **Authentication**:
-  - Register with username, password, email and date of birth.
-  - Login with validation and preloaded user `p / testuser`.
-
--  **Gameplay**:
-  - Move spaceship within bottom 40% of screen using arrow keys.
-  - Shoot using a customizable key (letter or space).
-  - Enemies arranged in a 4x5 grid move horizontally and shoot randomly downward.
-  - Player has 3 lives. Game ends when lives run out or time ends.
+    - Register with username, password, email and date of birth.
+    - Login with validation and preloaded user `p / testuser`.
   
 -  **Configuration**:
-  - Choose shooting key.
-  - Choose background.
-  - Set game duration (min. 2 minutes).
+    - Choose shooting key.
+    - Choose background.
+    - Set game duration (min. 2 minutes).
 
 -  **Scoring**:
-  - Row 4 = 5 pts, Row 3 = 10 pts, Row 2 = 15 pts, Row 1 = 20 pts.
-  - High scores saved per session and shown at end of game.
-
--  **Audio & Visuals**:
-  - Custom visuals for enemies and player.
-  - Unique background music during gameplay.
-  - Sound effects for shooting and hit/death.
+    - Row 4 = 5 pts, Row 3 = 10 pts, Row 2 = 15 pts, Row 1 = 20 pts.
+    - High scores saved per session and shown at end of game.
     
 ---
 
@@ -55,11 +46,9 @@ You can try the game directly in your browser without downloading anything:
 
 1. Clone or open the project:
 2. Open `index.html` in **Google Chrome** (min resolution 1366×768).
-
 3. Register or use default login:
-- **Username:** `p`
-- **Password:** `testuser`
-
+  - **Username:** `p`
+  - **Password:** `testuser`
 4. Configure your game and start playing!
    
 ---

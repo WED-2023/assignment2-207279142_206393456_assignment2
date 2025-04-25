@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bubble Invaders</title>  <!-- Tab title -->
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/common.css" />
   <link rel="stylesheet" href="css/about.css" /> 
   <link rel="stylesheet" href="css/password.css" /> 
   <link rel="stylesheet" href="css/nav.css">
@@ -53,9 +52,18 @@
               <!-- CHARACTERS -->
               <img src="Images/player_front.png" alt="Characters" class="character-image">
             </div>
-            <p class="credits">Maor Nezer, Ron Shukrun</p>
-            <p class="credits">ID: 206393456, 207279142</p>
-            <a href="#" class="site-link">Visit our portfolio</a>
+            <p style="font-size: 26px; color: yellow; font-family: 'Comic Sans MS', cursive; text-shadow: 2px 2px red; margin-top: 15px;">
+              Maor Nezer, Ron Shukrun
+            </p>
+            <p style="font-size: 24px; color: yellow; font-family: 'Comic Sans MS', cursive; text-shadow: 2px 2px red;">
+              ID: 206393456, 207279142
+            </p>
+            <a href="https://wed-2023.github.io/assignment2-207279142_206393456_assignment2/"
+            target="_blank"
+            style="font-size: 26px; color: yellow; font-family: 'Comic Sans MS', cursive; text-shadow: 2px 2px red; display: inline-block; margin-top: 10px;">
+             The coolest game ever – click here!
+         </a>
+         
           </div>
         </div>
 
@@ -139,6 +147,10 @@
             <img src="Images/game_back3.png" alt="Background 3" />
           </label>
         </div>
+        <!-- Shooting Key -->
+        <label for="shootKey" class="credits">Choose Shooting Key (letter or space):</label>
+        <input type="text" id="shootKey" maxlength="1" placeholder="e.g. A or Space" required />
+        
 
         <button type="submit" class="menu-button">Save</button>
         <button type="button" class="menu-button" data-screen="welcome">← Back</button>
@@ -151,7 +163,6 @@
   </div>
 </div>
 
-  <!-- Game -->
 <!-- Game -->
   <div id="game" class="screen protected">
     <div class="screen-container">
@@ -199,21 +210,29 @@
   </main>
 
   <footer>
-    <p>Contact us: maor@bgu</p>
-    <p>&copy; 2025</p>
+    <p style="font-size: 16px;">Contact us: maorme@bgu.ac.il | ronsh@bgu.ac.il</p>
+    <p style="font-size: 16px;">© 2025 – All rights reserved</p>
   </footer>
 
   <!-- About Modal -->
-<div id="aboutModal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close">X</button>
-    <h2>About This Project</h2>
-    <p><strong>Submitted by:</strong> Maor Nezer & Ron Shukrun</p>
-    <p><strong>Template used:</strong> Custom game layout inspired by Bubble Trouble</p>
-    <p><strong>Plugin used:</strong> None (Vanilla JS only, no jQuery)</p>
-    <p><strong>Challenges:</strong> Canvas mechanics, modular file structure, responsive layout</p>
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close">X</button>
+      <h2>About This Project</h2>
+      <p><strong>Submitted by:</strong> Maor Nezer & Ron Shukrun</p>
+      <p><strong>Template used:</strong> None – fully custom design</p>
+      <p><strong>Plugin used:</strong> None – Vanilla JavaScript only, no jQuery</p>
+      <p><strong>What we implemented:</strong></p>
+      <ul style="text-align: left; margin: 0 auto; display: inline-block;">
+        <li>✔️ Shooting logic with cooldown (spacebar firing)</li>
+        <li>✔️ Enemy bullets and health system (hearts reduction)</li>
+        <li>✔️ Game timer displaying remaining time</li>
+        <li>✔️ High scores shown at end of game per user</li>
+        <li>✔️ Sound effects and background music</li>
+      </ul>
+      <p><strong>Challenges we faced:</strong> Canvas mechanics, syncing animation with logic, managing modular screen transitions, storing scores per user</p>
+    </div>
   </div>
-</div>
 
 
   <!-- JS -->

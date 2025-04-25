@@ -34,7 +34,14 @@
       screens.forEach(screen => screen.classList.remove("active"));
       const target = document.getElementById(screenId);
       if (target) target.classList.add("active");
-    
+      // Stop background music when leaving the game screen
+      if (screenId !== "game") {
+        const bgm = document.getElementById("gameMusic");
+        if (bgm && !bgm.paused) {
+          bgm.pause();
+          bgm.currentTime = 0; // Optional: reset to start
+        }
+      }
       // Clear forms if returning
       if (screenId === "login") {
         document.getElementById("loginForm").reset();
@@ -116,12 +123,16 @@
       const user = JSON.parse(sessionStorage.getItem("currentUser"));
       const loggedIn = !!user;
     
-      //navigation buttons
+      // navigation buttons
       document.querySelector('[data-screen="login"]').style.display = loggedIn ? "none" : "inline-block";
       document.querySelector('[data-screen="register"]').style.display = loggedIn ? "none" : "inline-block";
       document.getElementById("logoutBtn").style.display = loggedIn ? "inline-block" : "none";
     
-      // Welcome screen
+      // hide "let's play" and "Settings" if not logged in
+      document.querySelector('[data-screen="game"]').style.display = loggedIn ? "inline-block" : "none";
+      document.querySelector('[data-screen="config"]').style.display = loggedIn ? "inline-block" : "none";
+    
+      // Welcome screen buttons
       const welcomeLogin = document.querySelector('#welcome [data-screen="login"]');
       const welcomeRegister = document.querySelector('#welcome [data-screen="register"]');
       if (welcomeLogin) welcomeLogin.style.display = loggedIn ? "none" : "inline-block";
@@ -130,7 +141,7 @@
       // Greeting
       const greeting = document.getElementById("userGreeting");
       if (greeting) greeting.textContent = loggedIn ? `Hello, ${user.firstName || user.username}!` : "";
-
+    
       const buttonBox = document.querySelector('#welcome .button-box');
       if (buttonBox) buttonBox.style.display = loggedIn ? "none" : "block";
     }

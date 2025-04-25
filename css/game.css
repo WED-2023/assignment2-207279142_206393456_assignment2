@@ -1,46 +1,109 @@
-
-/* === game.css ===
-   Styles specific to the gameplay screen and canvas
-*/
+/* game.css – styling specific to game screen (canvas + game visuals) */
 
 #gameCanvas {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-bottom: 10px;
-  border: 4px solid gold;
-  box-shadow: 0 0 10px #000;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  height: 100%;
-}
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    border: 4px solid gold;
+    box-shadow: 0 0 10px #000;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+  }
+  .canvas-wrapper {
+    position: relative; 
+    width: 700px;
+    margin: 0 auto; 
+}  
+  
 
-/* Position container around canvas for relative positioning */
-.canvas-wrapper {
-  position: relative;
-  width: 700px;
-  margin: 0 auto;
-}
+  .background-options {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .background-options img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .background-options input[type="radio"]:checked + img {
+    border-color: gold;
+    box-shadow: 0 0 10px gold;
+  }
 
-/* Life hearts display, placed outside the top-right of the canvas */
-#lifeContainer {
-  position: absolute;
-  top: -50px;
-  right: 10px;
-  display: flex;
-  gap: 10px;
-  z-index: 10;
-}
+  .menu-frame {
+    position: relative; 
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 6px solid gold;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #000000cc;
+    text-align: center;
+  }
 
-.life-heart {
-  width: 40px;
-  height: 40px;
-}
 
-/* Optional: animation keyframes */
+  #lifeContainer {
+    position: absolute;
+    top: -50px; 
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+  }
+  
+  .life-heart {
+    width: 40px;
+    height: 40px;
+  }
+
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*
+.menu-button {
+  background-color:  #f50057;  
+  border: 2px solid yellow;   
+  color: white;              
+  font-size: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background-color: #f50057; 
+}*/
+
+
+#highScoreTable {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+#highScoreTable th,
+#highScoreTable td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#highScoreTable th {
+  background-color: #333;
+  color: white;
 }

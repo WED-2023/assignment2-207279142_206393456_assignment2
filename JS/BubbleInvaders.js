@@ -77,24 +77,24 @@ for (let r = 0; r < enemyRows; r++) {
     });
   }
 }
-
+/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 document.addEventListener("keydown", e => {
-  if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+  if ([" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
     e.preventDefault();
   }
-  keys[e.code] = true;
+  keys[e.key.toLowerCase()] = true;
 });
 
 document.addEventListener("keyup", e => {
-  delete keys[e.code];
+  delete keys[e.key.toLowerCase()];
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   // This is the "Let's Play" button in the navbar
   const startGameBtn = document.querySelector('[data-screen="game"]');
   const newGameBtn   = document.getElementById("newGameBtn");
-
   startGameBtn.addEventListener("click", () => {
     const config = JSON.parse(sessionStorage.getItem("gameConfig"));
     if (!config) {
@@ -133,12 +133,18 @@ function update() {
   if (!gameScreen.classList.contains("active")) return;
 
   const limitY = canvas.height * 0.6;
-  if (keys["ArrowLeft"] && bubble.x > bubble.width / 2) bubble.x -= bubble.speed;
-  if (keys["ArrowRight"] && bubble.x < canvas.width - bubble.width / 2) bubble.x += bubble.speed;
-  if (keys["ArrowUp"] && bubble.y > limitY) bubble.y -= bubble.speed;
-  if (keys["ArrowDown"] && bubble.y < canvas.height - bubble.height) bubble.y += bubble.speed;
-  if (keys["Space"]) shoot();
+  if (keys["arrowleft"] && bubble.x > bubble.width / 2) bubble.x -= bubble.speed;
+  if (keys["arrowright"] && bubble.x < canvas.width - bubble.width / 2) bubble.x += bubble.speed;
+  if (keys["arrowup"] && bubble.y > limitY) bubble.y -= bubble.speed;
+  if (keys["arrowdown"] && bubble.y < canvas.height - bubble.height) bubble.y += bubble.speed;
+/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+  const config = JSON.parse(sessionStorage.getItem("gameConfig"));
+  const shootKey = config?.shootKey || " ";
 
+  if (keys[shootKey]) {
+    shoot();
+  }
   bullets.forEach(b => b.y -= b.speed);
   bullets.filter(b => b.y >= 0);
 

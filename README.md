@@ -13,8 +13,8 @@ Bubble Invaders is a fast-paced game where the player controls a character at th
 
 ##  Authors
 
-- **Maor Nezer** — 206393456  
-- **Ron Shukrun** — 207279142
+**Maor Nezer** — 206393456  
+**Ron Shukrun** — 207279142
 
 ---
 

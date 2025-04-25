@@ -43,12 +43,18 @@ const keys = {};
 const maxSpeedIncreases = 4;
 const enemyRadius = 30;
 
-const enemyColors = [
-  "#FF0000", // red
-  "#FFA500", // orange
-  "#FFFF00", // yello
-  "#008000"  // green
-];
+// Load enemy images by color
+const enemyImages = {
+  red: new Image(),
+  purple: new Image(),
+  yellow: new Image(),
+  green: new Image()
+};
+
+enemyImages.red.src = "Images/redEnemy.png";
+enemyImages.purple.src = "Images/purpleEnemy.png";
+enemyImages.yellow.src = "Images/yellowEnemy.png";
+enemyImages.green.src = "Images/greenEnemy.png";
 
 // Player's personal high scores – stored in localStorage per session
 let highScores = JSON.parse(localStorage.getItem("highScore")) || [];
@@ -194,8 +200,10 @@ function handleEnemyShooting() {
         x: enemy.x,
         y: enemy.y + 20,
         speed: bulletBaseSpeed,
-        color: enemy.color 
+        color: enemy.color,
+        colorName: enemy.colorName
       });
+      
     }
   }
 
@@ -302,8 +310,7 @@ let currentUsername = sessionStorage.getItem("username");
   canvas.height = 600;
 
   // Reset player & enemies
-  //bubble.x = initialPlayerPosition.x;
-  //bubble.y = initialPlayerPosition.y;
+
   enemies.length = 0;
   bulletBaseSpeed = 3;
   enemySpeed = 1;
@@ -311,13 +318,14 @@ let currentUsername = sessionStorage.getItem("username");
   enemyBullets = [];
 
   const enemyRows = 4, enemyCols = 5;
+  const colorNames = ["red", "purple", "yellow", "green"];
   for (let r = 0; r < enemyRows; r++) {
     for (let c = 0; c < enemyCols; c++) {
       enemies.push({
         x: enemyRadius + 10 + c * (enemyRadius * 2 + 10),
         y: enemyRadius + 10 + r * (enemyRadius * 2 + 10),
         row: r,
-        color: enemyColors[r]
+        colorName: colorNames[r]
       });
     }
   }
@@ -356,29 +364,28 @@ function draw() {
   // Draw bullets
   bullets.forEach(b => ctx.drawImage(bulletImg, b.x - 8, b.y, 16, 32));
   
-// Draw enemies as colored circles
+  // Draw enemies as colored circles
   enemies.forEach(e => {
-    ctx.beginPath();
-    ctx.arc(e.x, e.y, enemyRadius, 0, Math.PI * 2);
-    ctx.fillStyle = e.color;
-    ctx.fill();
-
-    // Outline with transparency
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    ctx.closePath();
+    const img = enemyImages[e.colorName];
+    if (img.complete) {
+      const enemySize = 80;
+      ctx.drawImage(img, e.x - enemySize / 2, e.y - enemySize / 2, enemySize, enemySize);
+    }
   });
 
-
-  // Draw enemy bullets with their own color
+  // Draw enemy bullets using the enemy's image (scaled down)
   enemyBullets.forEach(b => {
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
-    ctx.fillStyle = b.color || "red";
-    ctx.fill();
-    ctx.closePath();
+    const img = enemyImages[b.colorName];
+    if (img && img.complete) {
+      const bulletSize = 24;
+      ctx.drawImage(img, b.x - bulletSize / 2, b.y - bulletSize / 2, bulletSize, bulletSize);      
+    } else {
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = b.color || "red";
+      ctx.fill();
+      ctx.closePath();
+    }
   });
 
 
